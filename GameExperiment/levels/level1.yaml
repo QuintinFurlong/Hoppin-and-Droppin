@@ -1,0 +1,10 @@
+world: 
+   - type: floor
+     position: {x: 0, y: 750}
+     size: {width: 5000, height: 500}
+   - type: platform
+     position: {x: 400, y: 450}
+     size: {width: 300, height: 50}   
+   - type: platform
+     position: {x: 1200, y: 250}
+     size: {width: 500, height: 50}
