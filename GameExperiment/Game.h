@@ -21,6 +21,8 @@ private:
 	sf::RectangleShape bullet[CLIP_SIZE];
 	sf::Vector2f bulletVelo[CLIP_SIZE];
 	int currentBullet;
+	static const int FIRE_RATE = 30;
+	int timer;
 	float m_velo;
 	sf::View m_view;
 

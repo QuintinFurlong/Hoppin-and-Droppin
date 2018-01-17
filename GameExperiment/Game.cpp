@@ -35,6 +35,7 @@ Game::Game()
 
 	m_view = m_window.getView();
 	m_velo = 0;
+	timer = 0;
 }
 
 void Game::run()
@@ -80,38 +81,65 @@ void Game::processEvents()
 
 void Game::update(sf::Time)
 {
-	if (m_keyHandler.isPressed(sf::Keyboard::D))
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 30)
 	{
-		m_player.move(5, 0);
-		m_view.setCenter(m_window.getView().getCenter().x + 5, m_window.getView().getCenter().y);
+		m_player.move(10, 0);
 	}
-	if (m_keyHandler.isPressed(sf::Keyboard::A))
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) < -30)
 	{
-		m_player.move(-5, 0);
-		m_view.setCenter(m_window.getView().getCenter().x - 5, m_window.getView().getCenter().y);
+		m_player.move(-10, 0);
 	}
-	if (m_keyHandler.isPressed(sf::Keyboard::W))
+	if (sf::Joystick::isButtonPressed(0, 0))
 	{
 		m_velo = -m_player.getSize().y / 6;
 	}
-	if (m_keyHandler.isPressed(sf::Keyboard::Space))
+	if (timer == 0)
 	{
-		sf::Vector2f temp = sf::Vector2f();
-		//bulletVelo[currentBullet] = 
+		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)
+		{
+			sf::Vector2f temp = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
+			temp = sf::Vector2f(temp.x / sqrt(temp.x * temp.x + temp.y * temp.y), temp.y / sqrt(temp.x * temp.x + temp.y * temp.y));
+			bulletVelo[currentBullet] = temp * 20.0f;
+			bullet[currentBullet].setPosition(m_player.getPosition() + m_player.getSize()/2.0f);
+			currentBullet++;
+			bulletVelo[currentBullet] = sf::Vector2f(0,0);
+			timer = FIRE_RATE;
+			std::cout << temp.x << "---" << temp.y << std::endl;
+		}
+	}
+	else
+	{
+		timer--;
+	}
+	if (currentBullet > CLIP_SIZE)
+	{
+		currentBullet = 0;
 	}
 
 	m_player.move(0,m_velo);
 	m_velo += .98;
+	for (int index = 0; index < CLIP_SIZE; index++)
+	{
+		if (bulletVelo[index] != sf::Vector2f(0,0))
+		{
+			bullet[index].setPosition(bullet[index].getPosition() + bulletVelo[index]);
+		}
+	}
 
 	m_view.setCenter(m_player.getPosition());
 	m_window.setView(m_view);
 
 	for (int index = 0; index < m_wallSprites.size();index++)
 	{
-		if (m_player.getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds()))
+		//checks if platform and if left thumb stick is pointing down
+		if (m_wallSprites.at(index).getFillColor() != sf::Color(200, 200, 200) || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
 		{
-			m_player.setPosition(m_player.getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getSize().y);
-			m_velo = 0;
+			if (m_player.getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds()) && m_velo >= 0 //if player collids with objects and if player is going down
+				&& (m_player.getPosition().y + m_player.getSize().y - m_wallSprites.at(index).getPosition().y < m_velo))//ask me about it murt, i just cant in text
+			{
+				m_player.setPosition(m_player.getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getSize().y);
+				m_velo = 0;
+			}
 		}
 	}
 
@@ -120,6 +148,14 @@ void Game::update(sf::Time)
 void Game::render()
 {
 	m_window.clear();
+
+	for (int index = 0; index < CLIP_SIZE; index++)
+	{
+		if (bulletVelo[index] != sf::Vector2f(0, 0))
+		{
+			m_window.draw(bullet[index]);
+		}
+	}
 
 	m_window.draw(m_player);
 	for (const auto &m_wallVector : m_wallSprites)
