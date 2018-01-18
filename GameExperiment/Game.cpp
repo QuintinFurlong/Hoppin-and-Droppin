@@ -34,7 +34,7 @@ Game::Game()
 	m_player.setPosition(700,400);
 
 	m_view = m_window.getView();
-	m_velo = 0;
+	m_velo = sf::Vector2f(0, 0);
 	timer = 0;
 }
 
@@ -81,17 +81,17 @@ void Game::processEvents()
 
 void Game::update(sf::Time)
 {
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 30)
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 20)
 	{
-		m_player.move(10, 0);
+		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X)/100;
 	}
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) < -30)
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) < -20)
 	{
-		m_player.move(-10, 0);
+		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
 	}
 	if (sf::Joystick::isButtonPressed(0, 0))
 	{
-		m_velo = -m_player.getSize().y / 6;
+		m_velo.y = -m_player.getSize().y / 6;
 	}
 	if (timer == 0)
 	{
@@ -104,7 +104,6 @@ void Game::update(sf::Time)
 			currentBullet++;
 			bulletVelo[currentBullet] = sf::Vector2f(0,0);
 			timer = FIRE_RATE;
-			std::cout << temp.x << "---" << temp.y << std::endl;
 		}
 	}
 	else
@@ -116,8 +115,9 @@ void Game::update(sf::Time)
 		currentBullet = 0;
 	}
 
-	m_player.move(0,m_velo);
-	m_velo += .98;
+	m_player.move(m_velo);
+	m_velo.x *= .9;
+	m_velo.y += .98;
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
 		if (bulletVelo[index] != sf::Vector2f(0,0))
@@ -125,8 +125,9 @@ void Game::update(sf::Time)
 			bullet[index].setPosition(bullet[index].getPosition() + bulletVelo[index]);
 		}
 	}
+	m_view.setCenter(m_player.getPosition() + m_player.getSize() / 2.0f 
+		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
 
-	m_view.setCenter(m_player.getPosition());
 	m_window.setView(m_view);
 
 	for (int index = 0; index < m_wallSprites.size();index++)
@@ -134,11 +135,11 @@ void Game::update(sf::Time)
 		//checks if platform and if left thumb stick is pointing down
 		if (m_wallSprites.at(index).getFillColor() != sf::Color(200, 200, 200) || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
 		{
-			if (m_player.getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds()) && m_velo >= 0 //if player collids with objects and if player is going down
-				&& (m_player.getPosition().y + m_player.getSize().y - m_wallSprites.at(index).getPosition().y < m_velo))//ask me about it murt, i just cant in text
+			if (m_player.getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds()) && m_velo.y >= 0 //if player collids with objects and if player is going down
+				&& (m_player.getPosition().y + m_player.getSize().y - m_wallSprites.at(index).getPosition().y < m_velo.y))//ask me about it murt, i just cant in text
 			{
 				m_player.setPosition(m_player.getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getSize().y);
-				m_velo = 0;
+				m_velo.y = 0;
 			}
 		}
 	}

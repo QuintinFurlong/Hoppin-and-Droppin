@@ -23,7 +23,7 @@ private:
 	int currentBullet;
 	static const int FIRE_RATE = 30;
 	int timer;
-	float m_velo;
+	sf::Vector2f m_velo;
 	sf::View m_view;
 
 	LevelData currentLevel;

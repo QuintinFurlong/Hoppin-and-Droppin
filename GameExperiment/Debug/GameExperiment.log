@@ -1,5 +1,6 @@
 ﻿  Game.cpp
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\game.cpp(119): warning C4305: '*=': truncation from 'double' to 'float'
 c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\game.cpp(120): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\game.cpp(132): warning C4018: '<': signed/unsigned mismatch
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\game.cpp(133): warning C4018: '<': signed/unsigned mismatch
   GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
   GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)
