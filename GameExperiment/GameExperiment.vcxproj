@@ -116,13 +116,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="KeyHandler.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
-    <ClInclude Include="KeyHandler.h" />
     <ClInclude Include="LevelLoader.h" />
   </ItemGroup>
   <ItemGroup>

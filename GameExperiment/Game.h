@@ -3,7 +3,6 @@
 
 #include <SFML/Graphics.hpp>
 #include "LevelLoader.h"
-#include "KeyHandler.h"
 
 class Game
 {
@@ -29,7 +28,6 @@ private:
 	LevelData currentLevel;
 	std::vector<sf::RectangleShape> m_wallSprites;
 	std::vector<sf::RectangleShape *> m_wallVector;
-	KeyHandler m_keyHandler;
 };
 
 #endif // !GAME

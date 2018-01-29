@@ -65,17 +65,6 @@ void Game::processEvents()
 		{
 			m_window.close();
 		}
-		switch (event.type)
-		{
-		case sf::Event::KeyPressed:
-			m_keyHandler.updateKey(event.key.code, true);
-			break;
-		case sf::Event::KeyReleased:
-			m_keyHandler.updateKey(event.key.code, false);
-			break;
-		default:
-			break;
-		}
 	}
 }
 
@@ -89,17 +78,18 @@ void Game::update(sf::Time)
 	{
 		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
 	}
-	if (sf::Joystick::isButtonPressed(0, 0))
+	if (sf::Joystick::isButtonPressed(0, 0) && m_velo.y == 0)//jump (A)
 	{
 		m_velo.y = -m_player.getSize().y / 6;
 	}
 	if (timer == 0)
 	{
-		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)
+		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)//right trigger shoot
 		{
 			sf::Vector2f temp = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
 			temp = sf::Vector2f(temp.x / sqrt(temp.x * temp.x + temp.y * temp.y), temp.y / sqrt(temp.x * temp.x + temp.y * temp.y));
 			bulletVelo[currentBullet] = temp * 20.0f;
+			m_velo -= bulletVelo[currentBullet];
 			bullet[currentBullet].setPosition(m_player.getPosition() + m_player.getSize()/2.0f);
 			currentBullet++;
 			bulletVelo[currentBullet] = sf::Vector2f(0,0);
