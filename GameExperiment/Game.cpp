@@ -17,14 +17,14 @@ Game::Game()
 		if (obstacle.m_type == "floor")
 			sprite.setFillColor(sf::Color::Green);
 		else
-			sprite.setFillColor(sf::Color(200,200,200));
+			sprite.setFillColor(sf::Color(139, 69, 19));
 		m_wallSprites.push_back(sprite);
 	}
 
 	for(int index = 0;index < CLIP_SIZE;index++)
 	{
 		bullet[index].setSize(sf::Vector2f(20, 20));
-		bullet[index].setFillColor(sf::Color::Red);
+		bullet[index].setFillColor(sf::Color(192, 192, 192));
 		bulletVelo[index] = sf::Vector2f(0, 0);
 	}
 	currentBullet = 0;
