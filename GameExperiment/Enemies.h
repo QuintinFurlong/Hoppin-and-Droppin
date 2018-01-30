@@ -6,6 +6,7 @@ class Enemies
 {
 public:
 	static const int MAX_ENEMIES = 10;
+	static const int MAX_MOVE = 5;
 
 private:
 	sf::RectangleShape bodies[MAX_ENEMIES];
@@ -14,6 +15,7 @@ private:
 
 public:
 	Enemies();
-	void update(sf::Vector2f t_playerPos);
+	void update(sf::RectangleShape t_player);
 	void render(sf::RenderWindow & t_window);
+
 };

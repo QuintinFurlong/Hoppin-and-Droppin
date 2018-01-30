@@ -11,10 +11,19 @@ Enemies::Enemies()
 	}
 }
 
-void Enemies::update(sf::Vector2f t_playerPos)
+void Enemies::update(sf::RectangleShape t_player)
 {
 	for (int i = 0; i < MAX_ENEMIES; i++)
 	{
+		if (t_player.getPosition().x + t_player.getSize().x < bodies[i].getPosition().x)
+		{
+			velo[i].x -= MAX_MOVE;
+		}
+		else if (t_player.getPosition().x > bodies[i].getPosition().x + bodies[i].getSize().x)
+		{
+			velo[i].x += MAX_MOVE;
+		}
+
 		bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
 	}
 }

@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "LevelLoader.h"
+#include "Player.h"
 
 class Game
 {
@@ -11,18 +12,11 @@ public:
 	void run();
 private:
 	void             processEvents();
-	void             update(sf::Time);
+	void             update(sf::Time t_time);
 	void             render();
 
 	sf::RenderWindow m_window;
-	sf::RectangleShape m_player;
-	static const int CLIP_SIZE = 10;
-	sf::RectangleShape bullet[CLIP_SIZE];
-	sf::Vector2f bulletVelo[CLIP_SIZE];
-	int currentBullet;
-	static const int FIRE_RATE = 30;
-	int timer;
-	sf::Vector2f m_velo;
+	Player m_player;
 	sf::View m_view;
 
 	LevelData currentLevel;

@@ -1,0 +1,102 @@
+#include "Player.h"
+
+Player::Player()
+{
+	for (int index = 0; index < CLIP_SIZE; index++)
+	{
+		bullet[index].setSize(sf::Vector2f(20, 20));
+		bullet[index].setFillColor(sf::Color(192, 192, 192));
+		bulletVelo[index] = sf::Vector2f(0, 0);
+	}
+	currentBullet = 0;
+
+	m_body.setFillColor(sf::Color::Blue);
+	m_body.setSize(sf::Vector2f(100, 150));
+	m_body.setPosition(700, 400);
+
+	m_velo = sf::Vector2f(0, 0);
+	timer = 0;
+}
+
+void Player::update()
+{
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 20)
+	{
+		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
+	}
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) < -20)
+	{
+		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
+	}
+	if (sf::Joystick::isButtonPressed(0, 0) && m_velo.y == 0)//jump (A)
+	{
+		m_velo.y = -m_body.getSize().y / 6;
+	}
+	if (timer == 0)
+	{
+		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)//right trigger shoot
+		{
+			sf::Vector2f temp = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
+			temp = sf::Vector2f(temp.x / sqrt(temp.x * temp.x + temp.y * temp.y), temp.y / sqrt(temp.x * temp.x + temp.y * temp.y));
+			bulletVelo[currentBullet] = temp * 20.0f;
+			m_velo -= bulletVelo[currentBullet];
+			bullet[currentBullet].setPosition(m_body.getPosition() + m_body.getSize() / 2.0f);
+			currentBullet++;
+			bulletVelo[currentBullet] = sf::Vector2f(0, 0);
+			timer = FIRE_RATE;
+		}
+	}
+	else
+	{
+		timer--;
+	}
+	if (currentBullet > CLIP_SIZE)
+	{
+		currentBullet = 0;
+	}
+
+	m_body.move(m_velo);
+	m_velo.x *= .9;
+	m_velo.y += .98;
+	for (int index = 0; index < CLIP_SIZE; index++)
+	{
+		if (bulletVelo[index] != sf::Vector2f(0, 0))
+		{
+			bullet[index].setPosition(bullet[index].getPosition() + bulletVelo[index]);
+		}
+	}
+}
+
+void Player::render(sf::RenderWindow & t_window)
+{
+
+	for (int index = 0; index < CLIP_SIZE; index++)
+	{
+		if (bulletVelo[index] != sf::Vector2f(0, 0))
+		{
+			t_window.draw(bullet[index]);
+		}
+	}
+
+	t_window.draw(m_body);
+}
+
+sf::RectangleShape Player::getBody()
+{
+	return m_body;
+}
+
+sf::Vector2f Player::getVelo()
+{
+	return m_velo;
+}
+
+void Player::setPosition(sf::Vector2f t_vector)
+{
+	m_body.setPosition(t_vector);
+}
+
+void Player::stopFalling()
+{
+	m_velo.y = 0;
+}

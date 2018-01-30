@@ -20,22 +20,6 @@ Game::Game()
 			sprite.setFillColor(sf::Color(139, 69, 19));
 		m_wallSprites.push_back(sprite);
 	}
-
-	for(int index = 0;index < CLIP_SIZE;index++)
-	{
-		bullet[index].setSize(sf::Vector2f(20, 20));
-		bullet[index].setFillColor(sf::Color(192, 192, 192));
-		bulletVelo[index] = sf::Vector2f(0, 0);
-	}
-	currentBullet = 0;
-
-	m_player.setFillColor(sf::Color::Blue);
-	m_player.setSize(sf::Vector2f(100,150));
-	m_player.setPosition(700,400);
-
-	m_view = m_window.getView();
-	m_velo = sf::Vector2f(0, 0);
-	timer = 0;
 }
 
 void Game::run()
@@ -68,68 +52,36 @@ void Game::processEvents()
 	}
 }
 
-void Game::update(sf::Time)
+void Game::update(sf::Time t_time)
 {
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 20)
-	{
-		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X)/100;
-	}
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) < -20)
-	{
-		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
-	}
-	if (sf::Joystick::isButtonPressed(0, 0) && m_velo.y == 0)//jump (A)
-	{
-		m_velo.y = -m_player.getSize().y / 6;
-	}
-	if (timer == 0)
-	{
-		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)//right trigger shoot
-		{
-			sf::Vector2f temp = sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U), sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R));
-			temp = sf::Vector2f(temp.x / sqrt(temp.x * temp.x + temp.y * temp.y), temp.y / sqrt(temp.x * temp.x + temp.y * temp.y));
-			bulletVelo[currentBullet] = temp * 20.0f;
-			m_velo -= bulletVelo[currentBullet];
-			bullet[currentBullet].setPosition(m_player.getPosition() + m_player.getSize()/2.0f);
-			currentBullet++;
-			bulletVelo[currentBullet] = sf::Vector2f(0,0);
-			timer = FIRE_RATE;
-		}
-	}
-	else
-	{
-		timer--;
-	}
-	if (currentBullet > CLIP_SIZE)
-	{
-		currentBullet = 0;
-	}
+	m_player.update();
 
-	m_player.move(m_velo);
-	m_velo.x *= .9;
-	m_velo.y += .98;
-	for (int index = 0; index < CLIP_SIZE; index++)
-	{
-		if (bulletVelo[index] != sf::Vector2f(0,0))
-		{
-			bullet[index].setPosition(bullet[index].getPosition() + bulletVelo[index]);
-		}
-	}
-	m_view.setCenter(m_player.getPosition() + m_player.getSize() / 2.0f 
+	m_view.setCenter(m_player.getBody().getPosition() +m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
-
+	m_view.setSize(1400, 800);
 	m_window.setView(m_view);
 
 	for (int index = 0; index < m_wallSprites.size();index++)
 	{
-		//checks if platform and if left thumb stick is pointing down
-		if (m_wallSprites.at(index).getFillColor() != sf::Color(200, 200, 200) || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		if (index == 0)
 		{
-			if (m_player.getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds()) && m_velo.y >= 0 //if player collids with objects and if player is going down
-				&& (m_player.getPosition().y + m_player.getSize().y - m_wallSprites.at(index).getPosition().y < m_velo.y))//ask me about it murt, i just cant in text
+			int t = 1;
+		}
+		//checks if platform and if left thumb stick is pointing down
+		if (m_wallSprites.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		{
+			if (m_player.getBody().getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
+				)//ask me about it murt, i just cant in text
 			{
-				m_player.setPosition(m_player.getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getSize().y);
-				m_velo.y = 0;
+				if (m_player.getVelo().y >= 0)
+				{
+					if ((m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_wallSprites.at(index).getPosition().y < m_player.getVelo().y))
+					{
+						m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+						m_player.stopFalling();
+					}
+					
+				}
 			}
 		}
 	}
@@ -140,19 +92,12 @@ void Game::render()
 {
 	m_window.clear();
 
-	for (int index = 0; index < CLIP_SIZE; index++)
-	{
-		if (bulletVelo[index] != sf::Vector2f(0, 0))
-		{
-			m_window.draw(bullet[index]);
-		}
-	}
+	m_player.render(m_window);
 
-	m_window.draw(m_player);
 	for (const auto &m_wallVector : m_wallSprites)
 	{
 		m_window.draw(m_wallVector);
 	}
-	
+
 	m_window.display();
 }
