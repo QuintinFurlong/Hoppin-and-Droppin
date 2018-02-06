@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "LevelLoader.h"
 
 class Enemies
 {
@@ -15,6 +16,7 @@ private:
 
 public:
 	Enemies();
+	void create(std::vector<EnemyData> t_enemyData);
 	void update(sf::RectangleShape t_player);
 	void render(sf::RenderWindow & t_window);
 

@@ -11,6 +11,15 @@ Enemies::Enemies()
 	}
 }
 
+void Enemies::create(std::vector<EnemyData> t_enemyData)
+{
+	for (int i = 0; i < t_enemyData.size(); i++)
+	{
+		bodies[i].setPosition(t_enemyData.at(i).m_position);
+		alive[i] = true;
+	}
+}
+
 void Enemies::update(sf::RectangleShape t_player)
 {
 	for (int i = 0; i < MAX_ENEMIES; i++)

@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "LevelLoader.h"
 #include "Player.h"
+#include "Enemies.h"
 
 class Game
 {
@@ -18,6 +19,7 @@ private:
 	sf::RenderWindow m_window;
 	Player m_player;
 	sf::View m_view;
+	Enemies m_enemies;
 
 	LevelData currentLevel;
 	std::vector<sf::RectangleShape> m_wallSprites;

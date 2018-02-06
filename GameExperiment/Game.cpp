@@ -9,6 +9,8 @@ Game::Game()
 		return;
 	}
 
+	m_enemies.create(currentLevel.m_enemies);
+
 	for (WorldData const & obstacle : currentLevel.m_worldPieces)
 	{
 		sf::RectangleShape sprite;
@@ -55,6 +57,7 @@ void Game::processEvents()
 void Game::update(sf::Time t_time)
 {
 	m_player.update();
+	m_enemies.update(m_player.getBody());
 
 	m_view.setCenter(m_player.getBody().getPosition() +m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
@@ -92,8 +95,9 @@ void Game::render()
 {
 	m_window.clear();
 
+	m_enemies.render(m_window);
 	m_player.render(m_window);
-
+	
 	for (const auto &m_wallVector : m_wallSprites)
 	{
 		m_window.draw(m_wallVector);

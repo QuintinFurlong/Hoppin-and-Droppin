@@ -26,3 +26,6 @@ world:
    - type: platform
      position: {x: 4000, y: 250}
      size: {width: 500, height: 50}
+enemies:
+   - position: {x: 500, y: 0}
+   - position: {x: 1000, y: 0}

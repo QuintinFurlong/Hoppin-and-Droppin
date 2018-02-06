@@ -10,6 +10,11 @@ void operator >> (const YAML::Node& obstacleNode, WorldData& obstacle)
 	obstacle.m_size.y = obstacleNode["size"]["height"].as<float>();
 }
 
+void operator >> (const YAML::Node& enemyNode, EnemyData& enemy)
+{
+	enemy.m_position.x = enemyNode["position"]["x"].as<float>();
+	enemy.m_position.y = enemyNode["position"]["y"].as<float>();
+}
 
 /// <summary>
 /// @brief Top level function that extracts various game data from the YAML data stucture.
@@ -29,6 +34,14 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 		WorldData obstacle;
 		obstaclesNode[i] >> obstacle;
 		level.m_worldPieces.push_back(obstacle);
+	}
+
+	const YAML::Node& enemyNode = levelNode["enemies"].as<YAML::Node>();
+	for (unsigned i = 0; i < enemyNode.size(); ++i)
+	{
+		EnemyData enemy;
+		enemyNode[i] >> enemy;
+		level.m_enemies.push_back(enemy);
 	}
 }
 
