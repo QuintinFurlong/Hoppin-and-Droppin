@@ -57,7 +57,7 @@ void Game::processEvents()
 void Game::update(sf::Time t_time)
 {
 	m_player.update();
-	m_enemies.update(m_player.getBody());
+	m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets());
 
 	m_view.setCenter(m_player.getBody().getPosition() +m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
@@ -66,10 +66,6 @@ void Game::update(sf::Time t_time)
 
 	for (int index = 0; index < m_wallSprites.size();index++)
 	{
-		if (index == 0)
-		{
-			int t = 1;
-		}
 		//checks if platform and if left thumb stick is pointing down
 		if (m_wallSprites.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
 		{
@@ -88,7 +84,6 @@ void Game::update(sf::Time t_time)
 			}
 		}
 	}
-
 }
 
 void Game::render()

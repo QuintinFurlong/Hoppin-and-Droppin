@@ -4,9 +4,11 @@ Player::Player()
 {
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
-		bullet[index].setSize(sf::Vector2f(20, 20));
-		bullet[index].setFillColor(sf::Color(192, 192, 192));
+		sf::RectangleShape tempBullet;
+		tempBullet.setSize(sf::Vector2f(20, 20));
+		tempBullet.setFillColor(sf::Color(192, 192, 192));
 		bulletVelo[index] = sf::Vector2f(0, 0);
+		bullet.push_back(tempBullet);
 	}
 	currentBullet = 0;
 
@@ -40,7 +42,7 @@ void Player::update()
 			temp = sf::Vector2f(temp.x / sqrt(temp.x * temp.x + temp.y * temp.y), temp.y / sqrt(temp.x * temp.x + temp.y * temp.y));
 			bulletVelo[currentBullet] = temp * 20.0f;
 			m_velo -= bulletVelo[currentBullet];
-			bullet[currentBullet].setPosition(m_body.getPosition() + m_body.getSize() / 2.0f);
+			bullet.at(currentBullet).setPosition(m_body.getPosition() + m_body.getSize() / 2.0f);
 			currentBullet++;
 			bulletVelo[currentBullet] = sf::Vector2f(0, 0);
 			timer = FIRE_RATE;
@@ -62,7 +64,7 @@ void Player::update()
 	{
 		if (bulletVelo[index] != sf::Vector2f(0, 0))
 		{
-			bullet[index].setPosition(bullet[index].getPosition() + bulletVelo[index]);
+			bullet.at(index).setPosition(bullet.at(index).getPosition() + bulletVelo[index]);
 		}
 	}
 }
@@ -74,7 +76,7 @@ void Player::render(sf::RenderWindow & t_window)
 	{
 		if (bulletVelo[index] != sf::Vector2f(0, 0))
 		{
-			t_window.draw(bullet[index]);
+			t_window.draw(bullet.at(index));
 		}
 	}
 
@@ -99,4 +101,9 @@ void Player::setPosition(sf::Vector2f t_vector)
 void Player::stopFalling()
 {
 	m_velo.y = 0;
+}
+
+std::vector<sf::RectangleShape> Player::getBullets()
+{
+	return bullet;
 }
