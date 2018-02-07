@@ -4,12 +4,14 @@ Enemies::Enemies()
 {
 	for (int i = 0; i < MAX_ENEMIES; i++)
 	{
-		bodies[i].setSize(sf::Vector2f(100, 150));
-		bodies[i].setFillColor(sf::Color::Red);
+		sf::RectangleShape tempBody;
+		tempBody.setSize(sf::Vector2f(100, 150));
+		tempBody.setFillColor(sf::Color::Red);
 		alive[i] = false;
 		velo[i] = sf::Vector2f(0, 0);
-		bodies[i].setOutlineThickness(1);
-		bodies[i].setOutlineColor(sf::Color::White);
+		tempBody.setOutlineThickness(1);
+		tempBody.setOutlineColor(sf::Color::White);
+		bodies.push_back(tempBody);
 	}
 }
 
@@ -20,28 +22,28 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
 		alive[i] = true;
 	}
+	bodies.resize(t_enemyData.size());
 }
 
 void Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets)
 {
-	for (int enmies = 0; enmies < MAX_ENEMIES; enmies++)
+	for (int enmies = 0; enmies < bodies.size(); enmies++)
 	{
 		for (int bullies = 0; bullies < t_bullets.size(); bullies++)
 		{
 			if (bodies[enmies].getGlobalBounds().intersects(t_bullets.at(bullies).getGlobalBounds()))
 			{
 				alive[enmies] = false;
-				bodies[enmies].setOrigin(bodies[enmies].getGlobalBounds().width, bodies[enmies].getGlobalBounds().top);
-				bodies[enmies].setRotation(90);
 			}
 		}
 	}
+	deathAnimation(t_blocks);
 	moveMent(t_player, t_blocks);
 }
 
 void Enemies::render(sf::RenderWindow & t_window)
 {
-	for (int i = 0; i < MAX_ENEMIES; i++)
+	for (int i = 0; i < bodies.size(); i++)
 	{
 		t_window.draw(bodies[i]);
 	}
@@ -49,7 +51,7 @@ void Enemies::render(sf::RenderWindow & t_window)
 
 void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks)
 {
-	for (int i = 0; i < MAX_ENEMIES; i++)
+	for (int i = 0; i < bodies.size(); i++)
 	{
 		if (alive[i])
 		{
@@ -68,16 +70,11 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 			{
 				if (t_blocks.at(index).getFillColor() == sf::Color::Green || t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y)
 				{
-					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && velo[i].y >= 0 &&
+						bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y)
 					{
-						if (velo[i].y >= 0)
-						{
-							if ((bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y))
-							{
-								bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, t_blocks.at(index).getGlobalBounds().top - bodies[i].getSize().y));
-								velo[i].y = 0;
-							}
-						}
+						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, t_blocks.at(index).getGlobalBounds().top - bodies[i].getSize().y));
+						velo[i].y = 0;
 					}
 				}
 			}
@@ -105,6 +102,38 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 					}
 				}
 			}
+		}
+	}
+}
+
+void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
+{
+	int landed = false;
+	for (int i = 0; i < bodies.size(); i++)
+	{
+		if (!alive[i])
+		{
+			while (!landed)
+			{
+				bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y + 1));
+				for (int index = 0; index < t_blocks.size(); index++)
+				{
+					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					{
+						if (bodies[i].getRotation() != 90)
+						{
+							bodies[i].rotate(1);
+						}
+						while(bodies[i].getGlobalBounds().intersects( t_blocks.at(index).getGlobalBounds() ))
+						{
+						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
+						}
+						landed = true;
+						break;
+					}
+				}
+			}
+			landed = false;
 		}
 	}
 }

@@ -10,11 +10,12 @@ public:
 	static const int MAX_MOVE = 1;
 
 private:
-	sf::RectangleShape bodies[MAX_ENEMIES];
+	std::vector<sf::RectangleShape>  bodies;
 	bool alive[MAX_ENEMIES];
 	sf::Vector2f velo[MAX_ENEMIES];
 
 	void moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks);
+	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);
 
 public:
 	Enemies();
