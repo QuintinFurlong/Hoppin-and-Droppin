@@ -26,4 +26,5 @@ public:
 	void stopFalling();
 	std::vector<sf::RectangleShape> getBullets();
 	std::vector<sf::Vector2f> getBulletVelo();
+	void hit(bool t_hit);
 };

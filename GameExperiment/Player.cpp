@@ -46,6 +46,10 @@ void Player::update()
 			m_velo -= bulletVelo[currentBullet];
 			bullet.at(currentBullet).setPosition(m_body.getPosition() + m_body.getSize() / 2.0f);
 			currentBullet++;
+			if (currentBullet >= CLIP_SIZE)
+			{
+				currentBullet = 0;
+			}
 			bulletVelo[currentBullet] = sf::Vector2f(0, 0);
 			timer = FIRE_RATE;
 		}
@@ -53,10 +57,6 @@ void Player::update()
 	else
 	{
 		timer--;
-	}
-	if (currentBullet > CLIP_SIZE)
-	{
-		currentBullet = 0;
 	}
 
 	m_body.move(m_velo);
@@ -113,4 +113,21 @@ std::vector<sf::RectangleShape> Player::getBullets()
 std::vector<sf::Vector2f> Player::getBulletVelo()
 {
 	return bulletVelo;
+}
+
+void Player::hit(bool t_hit)
+{
+	if (t_hit)
+	{
+		if (currentBullet != 0)
+		{
+			bullet.at(currentBullet - 1).setPosition(-1000, -1000);
+			bulletVelo.at(currentBullet - 1) = sf::Vector2f(0, 0);
+		}
+		else
+		{
+			bullet.at(currentBullet - 1+ CLIP_SIZE).setPosition(-1000, -1000);
+			bulletVelo.at(currentBullet - 1+ CLIP_SIZE) = sf::Vector2f(0, 0);
+		}
+	}
 }

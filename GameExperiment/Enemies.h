@@ -21,7 +21,7 @@ private:
 public:
 	Enemies();
 	void create(std::vector<EnemyData> t_enemyData);
-	void update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo);
+	bool update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo);
 	void render(sf::RenderWindow & t_window);
 
 };
