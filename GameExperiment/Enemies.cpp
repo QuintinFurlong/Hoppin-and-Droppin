@@ -12,6 +12,7 @@ Enemies::Enemies()
 		tempBody.setOutlineThickness(1);
 		tempBody.setOutlineColor(sf::Color::White);
 		bodies.push_back(tempBody);
+		toTheRight[i] = true;
 	}
 }
 
@@ -25,7 +26,7 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 	bodies.resize(t_enemyData.size());
 }
 
-void Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets)
+void Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo)
 {
 	for (int enmies = 0; enmies < bodies.size(); enmies++)
 	{
@@ -33,7 +34,12 @@ void Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape
 		{
 			if (bodies[enmies].getGlobalBounds().intersects(t_bullets.at(bullies).getGlobalBounds()))
 			{
+				velo[enmies] += t_bulletVelo.at(bullies);
 				alive[enmies] = false;
+				if (t_bulletVelo.at(bullies).x < 0)
+				{
+					toTheRight[enmies] = false;
+				}
 			}
 		}
 	}
@@ -120,9 +126,19 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 				{
 					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 					{
-						if (bodies[i].getRotation() != 90)
+						if (toTheRight[i])
 						{
-							bodies[i].rotate(1);
+							if (bodies[i].getRotation() != 90)
+							{
+								bodies[i].rotate(1);
+							}
+						}
+						else
+						{
+							if (bodies[i].getRotation() != 270)
+							{
+								bodies[i].rotate(-1);
+							}
 						}
 						while(bodies[i].getGlobalBounds().intersects( t_blocks.at(index).getGlobalBounds() ))
 						{

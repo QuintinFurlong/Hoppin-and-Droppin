@@ -11,7 +11,7 @@ public:
 private:
 	sf::RectangleShape m_body;
 	std::vector<sf::RectangleShape> bullet;
-	sf::Vector2f bulletVelo[CLIP_SIZE];
+	std::vector<sf::Vector2f> bulletVelo;
 	int currentBullet;
 	int timer;
 	sf::Vector2f m_velo;
@@ -25,4 +25,5 @@ public:
 	void setPosition(sf::Vector2f t_vector);
 	void stopFalling();
 	std::vector<sf::RectangleShape> getBullets();
+	std::vector<sf::Vector2f> getBulletVelo();
 };

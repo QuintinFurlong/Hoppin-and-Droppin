@@ -7,8 +7,10 @@ Player::Player()
 		sf::RectangleShape tempBullet;
 		tempBullet.setSize(sf::Vector2f(20, 20));
 		tempBullet.setFillColor(sf::Color(192, 192, 192));
-		bulletVelo[index] = sf::Vector2f(0, 0);
+		sf::Vector2f tempVelo;
+		tempVelo = sf::Vector2f(0, 0);
 		bullet.push_back(tempBullet);
+		bulletVelo.push_back(tempVelo);
 	}
 	currentBullet = 0;
 
@@ -106,4 +108,9 @@ void Player::stopFalling()
 std::vector<sf::RectangleShape> Player::getBullets()
 {
 	return bullet;
+}
+
+std::vector<sf::Vector2f> Player::getBulletVelo()
+{
+	return bulletVelo;
 }
