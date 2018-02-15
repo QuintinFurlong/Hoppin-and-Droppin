@@ -27,4 +27,5 @@ public:
 	std::vector<sf::RectangleShape> getBullets();
 	std::vector<sf::Vector2f> getBulletVelo();
 	void hit(bool t_hit);
+	void takeDamage(bool t_hit);
 };

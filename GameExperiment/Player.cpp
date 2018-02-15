@@ -68,6 +68,11 @@ void Player::update()
 		{
 			bullet.at(index).setPosition(bullet.at(index).getPosition() + bulletVelo[index]);
 		}
+		if(sqrt(pow(m_body.getPosition().x - bullet[index].getPosition().x, 2) + pow(m_body.getPosition().y - bullet[index].getPosition().y, 2)) > 1100)
+		{
+			bullet.at(index).setPosition(-1000, -1000);
+			bulletVelo[index] = sf::Vector2f(0, 0);
+		}
 	}
 }
 
@@ -129,5 +134,13 @@ void Player::hit(bool t_hit)
 			bullet.at(currentBullet - 1+ CLIP_SIZE).setPosition(-1000, -1000);
 			bulletVelo.at(currentBullet - 1+ CLIP_SIZE) = sf::Vector2f(0, 0);
 		}
+	}
+}
+
+void Player::takeDamage(bool t_hit)
+{
+	if (t_hit)
+	{
+		m_body.setFillColor(sf::Color(m_body.getFillColor().r, m_body.getFillColor().g, m_body.getFillColor().b, m_body.getFillColor().a - 25));
 	}
 }

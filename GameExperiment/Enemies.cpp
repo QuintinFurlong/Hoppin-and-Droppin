@@ -25,7 +25,14 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 	}
 	bodies.resize(t_enemyData.size());
 }
-
+/// <summary>
+/// 
+/// </summary>
+/// <param name="t_player"></param>
+/// <param name="t_blocks"></param>
+/// <param name="t_bullets"></param>
+/// <param name="t_bulletVelo"></param>
+/// <returns></returns>true if enemy is hit by the players bullet
 bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo)
 {
 	bool temp = false;
@@ -44,9 +51,11 @@ bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape
 				}
 			}
 		}
+		velo[enmies] -= gun[enmies].update(t_player, bodies[enmies], alive[enmies]);
 	}
 	deathAnimation(t_blocks);
 	moveMent(t_player, t_blocks);
+
 	return temp;
 }
 
@@ -55,7 +64,21 @@ void Enemies::render(sf::RenderWindow & t_window)
 	for (int i = 0; i < bodies.size(); i++)
 	{
 		t_window.draw(bodies[i]);
+		gun[i].render(t_window);
 	}
+}
+
+int Enemies::hit(sf::RectangleShape t_player)
+{
+	bool temp = false;
+	for (int i = 0; i < bodies.size(); i++)
+	{
+		if (gun[i].hit(t_player))
+		{
+			temp = true;
+		}
+	}
+	return temp;
 }
 
 void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks)
@@ -66,18 +89,21 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;
-			if (t_player.getPosition().x + t_player.getSize().x < bodies[i].getPosition().x)
+			if (t_player.getPosition().x + t_player.getSize().x < bodies[i].getPosition().x
+				&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) < 1000)
 			{
 				velo[i].x -= MAX_MOVE;
 			}
-			else if (t_player.getPosition().x > bodies[i].getPosition().x + bodies[i].getSize().x)
+			else if (t_player.getPosition().x > bodies[i].getPosition().x + bodies[i].getSize().x
+				&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) < 1000)
 			{
 				velo[i].x += MAX_MOVE;
 			}
 
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (t_blocks.at(index).getFillColor() == sf::Color::Green || t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y)
+				if (t_blocks.at(index).getFillColor() == sf::Color::Green || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y
+					&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) >= 1000))
 				{
 					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && velo[i].y >= 0 &&
 						bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y)
@@ -88,7 +114,8 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 				}
 			}
 
-			if (t_player.getPosition().y + t_player.getSize().y < bodies[i].getPosition().y && velo[i].y == 0)//jump 
+			if (t_player.getPosition().y + t_player.getSize().y < bodies[i].getPosition().y && velo[i].y == 0
+				&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) < 1000)//jump 
 			{
 				velo[i].y = -bodies[i].getSize().y / 6;
 			}

@@ -58,6 +58,7 @@ void Game::update(sf::Time t_time)
 {
 	m_player.update();
 	m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
+	m_player.takeDamage(m_enemies.hit(m_player.getBody()));
 
 	m_view.setCenter(m_player.getBody().getPosition() +m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
