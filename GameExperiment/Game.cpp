@@ -85,6 +85,28 @@ void Game::update(sf::Time t_time)
 			}
 		}
 	}
+	//for jumping on bodies
+
+	/*for (int index = 0; index < m_wallSprites.size(); index++)
+	{
+		//checks if platform and if left thumb stick is pointing down
+		if (m_wallSprites.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		{
+			if (m_player.getBody().getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
+				)//ask me about it murt, i just cant in text
+			{
+				if (m_player.getVelo().y >= 0)
+				{
+					if ((m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_wallSprites.at(index).getPosition().y < m_player.getVelo().y))
+					{
+						m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+						m_player.stopFalling();
+					}
+
+				}
+			}
+		}
+	}*/
 }
 
 void Game::render()

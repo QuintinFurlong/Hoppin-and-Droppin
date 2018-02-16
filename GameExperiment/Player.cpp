@@ -141,6 +141,6 @@ void Player::takeDamage(bool t_hit)
 {
 	if (t_hit)
 	{
-		m_body.setFillColor(sf::Color(m_body.getFillColor().r, m_body.getFillColor().g, m_body.getFillColor().b, m_body.getFillColor().a - 25));
+		m_body.setFillColor(sf::Color(m_body.getFillColor().r, m_body.getFillColor().g, m_body.getFillColor().b, m_body.getFillColor().a - 5));
 	}
 }

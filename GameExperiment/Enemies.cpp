@@ -49,6 +49,10 @@ bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape
 				{
 					toTheRight[enmies] = false;
 				}
+				else
+				{
+					toTheRight[enmies] = true;
+				}
 			}
 		}
 		velo[enmies] -= gun[enmies].update(t_player, bodies[enmies], alive[enmies]);
@@ -177,6 +181,37 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 					break;
 				}
 			}
+			//corpse platforms
+			for (int index = 0; index < bodies.size(); index++)
+			{
+				if (index != i)
+				{
+					if (bodies[i].getGlobalBounds().intersects(bodies.at(index).getGlobalBounds()))
+					{
+						if (toTheRight[i])
+						{
+							if (bodies[i].getRotation() != 90)
+							{
+								bodies[i].rotate(2);
+							}
+						}
+						else
+						{
+							if (bodies[i].getRotation() != 270)
+							{
+								bodies[i].rotate(-2);
+							}
+						}
+						while (bodies[i].getGlobalBounds().intersects(bodies.at(index).getGlobalBounds()))
+						{
+							bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
+							velo[i].y = 0;
+						}
+						break;
+					}
+				}
+			}
 		}
 	}
 }
+
