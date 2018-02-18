@@ -5,7 +5,7 @@ class EnemyGun
 {
 public:
 	static const int CLIP_SIZE = 10;
-	static const int FIRE_RATE = 30;
+	static const int FIRE_RATE = 60;
 
 	EnemyGun();
 

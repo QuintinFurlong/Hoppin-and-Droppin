@@ -1,17 +1,25 @@
-﻿  Enemies.cpp
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(21): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(39): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(41): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(68): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(78): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(90): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(94): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(95): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(107): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(151): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(155): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(156): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(158): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(185): warning C4018: '<': signed/unsigned mismatch
-  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
-  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)
+﻿  Player.cpp
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(35): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(84): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(85): warning C4305: '+=': truncation from 'double' to 'float'
+  Game.cpp
+  Enemies.cpp
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(21): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(42): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(65): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(75): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(102): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(106): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(107): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(119): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(134): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(146): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(213): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(217): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(218): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(220): warning C4018: '<': signed/unsigned mismatch
+c:\users\bluem\source\repos\quintin-martin-best-game\gameexperiment\enemies.cpp(271): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  GameExperiment.vcxproj -> C:\Users\Bluem\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
+  GameExperiment.vcxproj -> C:\Users\Bluem\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)

@@ -24,6 +24,7 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 		alive[i] = true;
 	}
 	bodies.resize(t_enemyData.size());
+	realMax = t_enemyData.size();
 }
 /// <summary>
 /// 
@@ -45,13 +46,9 @@ bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape
 				velo[enmies] += sf::Vector2f(t_bulletVelo.at(bullies).x, t_bulletVelo.at(bullies).y);
 				alive[enmies] = false;
 				temp = true;
-				if (t_bulletVelo.at(bullies).x < 0)
+				if (t_bulletVelo.at(bullies).x < 0 && (bodies[enmies].getRotation() != 90 && bodies[enmies].getRotation() != 270))
 				{
 					toTheRight[enmies] = false;
-				}
-				else
-				{
-					toTheRight[enmies] = true;
 				}
 			}
 		}
@@ -85,6 +82,21 @@ int Enemies::hit(sf::RectangleShape t_player)
 	return temp;
 }
 
+bool Enemies::getAlive(int t_index)
+{
+	return alive[t_index];
+}
+
+sf::RectangleShape Enemies::getBody(int t_index)
+{
+	return bodies[t_index];
+}
+
+int Enemies::getRealSize()
+{
+	return realMax;
+}
+
 void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks)
 {
 	for (int i = 0; i < bodies.size(); i++)
@@ -104,10 +116,24 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 				velo[i].x += MAX_MOVE;
 			}
 
+			for (int index = 1; index < t_blocks.size(); index++)
+			{
+				if (t_blocks.at(index).getFillColor() == sf::Color::Green && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+				{
+					if (velo[i].x > 0)
+					{
+						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().x, bodies[i].getPosition().y);
+					}
+					else
+					{
+						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
+					}
+				}
+			}
+
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (t_blocks.at(index).getFillColor() == sf::Color::Green || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y
-					&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) >= 1000))
+				if (t_blocks.at(index).getFillColor() == sf::Color::Green || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y))
 				{
 					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && velo[i].y >= 0 &&
 						bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y)
@@ -117,15 +143,51 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 					}
 				}
 			}
+			for (int index = 0; index < bodies.size(); index++)
+			{
+				if (index != i)
+				{
+					//checks if enemy is dead
+					if (!alive[index])
+					{
+						if (bodies[i].getGlobalBounds().intersects(bodies[index].getGlobalBounds()))  //if enemy collids with enemy corspe
+						{
+							if (velo[i].y >= 0)//if enemy moving down
+							{
+								if (bodies[index].getRotation() == 90)
+								{
+									if (bodies[i].getPosition().y + bodies[i].getSize().y - bodies[index].getPosition().y < velo[i].y)
+									{
+										bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x,bodies[index].getGlobalBounds().top - bodies[i].getSize().y));
+										velo[i].y = 0;
+									}
+								}
+								else if (bodies[index].getRotation() == 270)
+								{
+									if (bodies[i].getPosition().y + bodies[i].getSize().y -bodies[index].getPosition().y + bodies[index].getSize().x < velo[i].y)
+									{
+										bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x,
+											bodies[index].getGlobalBounds().top - bodies[i].getSize().y));
+										velo[i].y = 0;
+									}
+								}
+							}
+
+						}
+					}
+					
+				}
+			}
 
 			if (t_player.getPosition().y + t_player.getSize().y < bodies[i].getPosition().y && velo[i].y == 0
 				&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) < 1000)//jump 
 			{
 				velo[i].y = -bodies[i].getSize().y / 6;
 			}
-
+			
 			bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
-			for (int comp = 0; comp < MAX_ENEMIES; comp++)
+			//slight spread
+			for (int comp = 0; comp < realMax; comp++)
 			{
 				if (alive[comp] && i != comp)
 				{
@@ -157,6 +219,30 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 			bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
+				if (index != 0)
+				{
+					if (t_blocks.at(index).getFillColor() == sf::Color::Green && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					{
+						if (velo[i].x > 0)
+						{
+							bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().y, bodies[i].getPosition().y);
+							if (bodies[i].getRotation() == 90)
+							{
+								bodies[i].move(-bodies[i].getSize().y, 0);
+							}
+						}
+						else
+						{
+							bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
+							if (bodies[i].getRotation() == 90)
+							{
+								bodies[i].move(bodies[i].getSize().y, 0);
+							}
+						}
+						break;
+					}
+				}
+
 				if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 				{
 					if (toTheRight[i])
@@ -173,7 +259,7 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 							bodies[i].rotate(-2);
 						}
 					}
-					while(bodies[i].getGlobalBounds().intersects( t_blocks.at(index).getGlobalBounds() ))
+					while(bodies[i].getGlobalBounds().intersects( t_blocks.at(index).getGlobalBounds()))
 					{
 						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
 						velo[i].y = 0;
@@ -202,7 +288,7 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 								bodies[i].rotate(-2);
 							}
 						}
-						while (bodies[i].getGlobalBounds().intersects(bodies.at(index).getGlobalBounds()))
+						while (bodies[i].getGlobalBounds().intersects(bodies.at(index).getGlobalBounds()) && !alive[index])
 						{
 							bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
 							velo[i].y = 0;

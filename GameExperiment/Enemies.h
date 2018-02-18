@@ -16,6 +16,7 @@ private:
 	bool toTheRight[MAX_ENEMIES];
 	sf::Vector2f velo[MAX_ENEMIES];
 	EnemyGun gun[MAX_ENEMIES];
+	int realMax = MAX_ENEMIES;
 
 	void moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks);
 	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);
@@ -27,4 +28,7 @@ public:
 	void render(sf::RenderWindow & t_window);
 
 	int hit(sf::RectangleShape t_player);
+	bool getAlive(int t_index);
+	sf::RectangleShape getBody(int t_index);
+	int getRealSize();
 };

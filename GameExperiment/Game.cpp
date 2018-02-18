@@ -9,6 +9,12 @@ Game::Game()
 		return;
 	}
 
+	if (!sf::Joystick::isConnected(0))
+	{
+		std::cout << sf::Joystick::Count;
+	}
+
+
 	m_enemies.create(currentLevel.m_enemies);
 
 	for (WorldData const & obstacle : currentLevel.m_worldPieces)
@@ -56,7 +62,7 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_time)
 {
-	m_player.update();
+	m_player.update(m_wallSprites);
 	m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
 	m_player.takeDamage(m_enemies.hit(m_player.getBody()));
 
@@ -65,49 +71,43 @@ void Game::update(sf::Time t_time)
 	m_view.setSize(1400, 800);
 	m_window.setView(m_view);
 
-	for (int index = 0; index < m_wallSprites.size();index++)
+	//for jumping on bodies
+
+	for (int index = 0; index < m_enemies.getRealSize(); index++)
 	{
-		//checks if platform and if left thumb stick is pointing down
-		if (m_wallSprites.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		//checks if enemy is dead and stick not pointing down
+		if (!m_enemies.getAlive(index) && sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
 		{
-			if (m_player.getBody().getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
-				)//ask me about it murt, i just cant in text
+			if (m_player.getBody().getGlobalBounds().intersects(m_enemies.getBody(index).getGlobalBounds()))  //if player collids with enemy
 			{
-				if (m_player.getVelo().y >= 0)
+				if (m_player.getVelo().y >= 0)//player moving down
 				{
-					if ((m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_wallSprites.at(index).getPosition().y < m_player.getVelo().y))
-					{
-						m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getBody().getSize().y));
-						m_player.stopFalling();
+					if (m_enemies.getBody(index).getRotation() == 90)
+					{ 
+						if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_enemies.getBody(index).getPosition().y < m_player.getVelo().y)
+						{
+							m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
+								m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+							m_player.stopFalling();
+						}
 					}
-					
+					else if (m_enemies.getBody(index).getRotation() == 270)
+					{
+						if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y - 
+							m_enemies.getBody(index).getPosition().y + m_enemies.getBody(index).getSize().x < m_player.getVelo().y)
+						{
+							m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
+								m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+							m_player.stopFalling();
+						}
+					}
 				}
+
 			}
 		}
 	}
-	//for jumping on bodies
-
-	/*for (int index = 0; index < m_wallSprites.size(); index++)
-	{
-		//checks if platform and if left thumb stick is pointing down
-		if (m_wallSprites.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
-		{
-			if (m_player.getBody().getGlobalBounds().intersects(m_wallSprites.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
-				)//ask me about it murt, i just cant in text
-			{
-				if (m_player.getVelo().y >= 0)
-				{
-					if ((m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_wallSprites.at(index).getPosition().y < m_player.getVelo().y))
-					{
-						m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x, m_wallSprites.at(index).getGlobalBounds().top - m_player.getBody().getSize().y));
-						m_player.stopFalling();
-					}
-
-				}
-			}
-		}
-	}*/
 }
+
 
 void Game::render()
 {

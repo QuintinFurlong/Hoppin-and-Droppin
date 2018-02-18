@@ -16,13 +16,13 @@ Player::Player()
 
 	m_body.setFillColor(sf::Color::Blue);
 	m_body.setSize(sf::Vector2f(100, 150));
-	m_body.setPosition(700, 400);
+	m_body.setPosition(300, 100);
 
 	m_velo = sf::Vector2f(0, 0);
 	timer = 0;
 }
 
-void Player::update()
+void Player::update(std::vector<sf::RectangleShape> t_blocks)
 {
 	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) > 20)
 	{
@@ -32,10 +32,31 @@ void Player::update()
 	{
 		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
 	}
+	for (int index = 0; index < t_blocks.size(); index++)
+	{
+		//checks if platform and if left thumb stick is pointing down
+		if (t_blocks.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		{
+			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
+				)//ask me about it murt, i just cant in text
+			{
+				if (m_velo.y >= 0)
+				{
+					if ((m_body.getPosition().y + m_body.getSize().y - t_blocks.at(index).getPosition().y < m_velo.y))
+					{
+						m_body.setPosition(sf::Vector2f(m_body.getPosition().x, t_blocks.at(index).getGlobalBounds().top - m_body.getSize().y));
+						stopFalling();
+					}
+
+				}
+			}
+		}
+	}
 	if (sf::Joystick::isButtonPressed(0, 0) && m_velo.y == 0)//jump (A)
 	{
 		m_velo.y = -m_body.getSize().y / 6;
 	}
+
 	if (timer == 0)
 	{
 		if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Z) < -1)//right trigger shoot
@@ -62,6 +83,11 @@ void Player::update()
 	m_body.move(m_velo);
 	m_velo.x *= .9;
 	m_velo.y += .98;
+	if (m_body.getPosition().x < 0)
+	{
+		m_body.setPosition(0, m_body.getPosition().y);
+	}
+
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
 		if (bulletVelo[index] != sf::Vector2f(0, 0))
@@ -141,6 +167,6 @@ void Player::takeDamage(bool t_hit)
 {
 	if (t_hit)
 	{
-		m_body.setFillColor(sf::Color(m_body.getFillColor().r, m_body.getFillColor().g, m_body.getFillColor().b, m_body.getFillColor().a - 5));
+		m_body.setFillColor(sf::Color::Magenta);
 	}
 }

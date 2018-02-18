@@ -18,7 +18,7 @@ private:
 
 public:
 	Player();
-	void update();
+	void update(std::vector<sf::RectangleShape> t_blocks);
 	void render(sf::RenderWindow & t_window);
 	sf::RectangleShape getBody();
 	sf::Vector2f getVelo();
