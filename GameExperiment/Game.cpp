@@ -8,12 +8,7 @@ Game::Game()
 	{
 		return;
 	}
-
-	if (!sf::Joystick::isConnected(0))
-	{
-		std::cout << sf::Joystick::Count;
-	}
-
+	m_player.setPosition(currentLevel.m_player.m_position);
 
 	m_enemies.create(currentLevel.m_enemies);
 
@@ -28,6 +23,7 @@ Game::Game()
 			sprite.setFillColor(sf::Color(139, 69, 19));
 		m_wallSprites.push_back(sprite);
 	}
+	m_offsetView = sf::Vector2f(0, 0);
 }
 
 void Game::run()
@@ -66,8 +62,14 @@ void Game::update(sf::Time t_time)
 	m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
 	m_player.takeDamage(m_enemies.hit(m_player.getBody()));
 
-	m_view.setCenter(m_player.getBody().getPosition() +m_player.getBody().getSize() / 2.0f
+	sf::Vector2f temp(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
+	
+	if (m_offsetView != sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3))
+	{
+		m_offsetView += sf::Vector2f((temp.x - m_view.getCenter().x) / CAM_SPEED, (temp.y - m_view.getCenter().y) / CAM_SPEED);
+	}
+	m_view.setCenter(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f + m_offsetView);
 	m_view.setSize(1400, 800);
 	m_window.setView(m_view);
 

@@ -16,6 +16,21 @@ void operator >> (const YAML::Node& enemyNode, EnemyData& enemy)
 	enemy.m_position.y = enemyNode["position"]["y"].as<float>();
 }
 
+void operator >> (const YAML::Node& playerNode, PlayerData& player)
+{
+	player.m_position.x = playerNode["position"]["x"].as<float>();
+	player.m_position.y = playerNode["position"]["y"].as<float>();
+}
+
+void operator >> (const YAML::Node& bossNode, BossData& boss)
+{
+	boss.m_type = bossNode["type"].as<std::string>();
+	boss.m_position.x = bossNode["position"]["x"].as<float>();
+	boss.m_position.y = bossNode["position"]["y"].as<float>();
+	boss.m_size.x = bossNode["size"]["width"].as<float>();
+	boss.m_size.y = bossNode["size"]["height"].as<float>();
+}
+
 /// <summary>
 /// @brief Top level function that extracts various game data from the YAML data stucture.
 /// 
@@ -43,6 +58,8 @@ void operator >> (const YAML::Node& levelNode, LevelData& level)
 		enemyNode[i] >> enemy;
 		level.m_enemies.push_back(enemy);
 	}
+	levelNode["player"] >> level.m_player;
+	levelNode["boss"] >> level.m_boss;
 }
 
 ////////////////////////////////////////////////////////////

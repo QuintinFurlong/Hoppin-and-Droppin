@@ -23,6 +23,18 @@ struct EnemyData
 	sf::Vector2f m_position;
 };
 
+struct PlayerData
+{
+	sf::Vector2f m_position;
+};
+
+struct BossData
+{
+	std::string m_type;
+	sf::Vector2f m_position;
+	sf::Vector2f m_size;
+};
+
 /// <summary>
 /// @brief A struct representing all the Level Data.
 /// 
@@ -32,6 +44,8 @@ struct LevelData
 {
 	std::vector<WorldData> m_worldPieces;
 	std::vector<EnemyData> m_enemies;
+	PlayerData m_player;
+	BossData m_boss;
 };
 
 /// <summary>

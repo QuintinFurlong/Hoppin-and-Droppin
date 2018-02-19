@@ -36,3 +36,9 @@ enemies:
    - position: {x: 2000, y: 0}
    - position: {x: 3000, y: 0}
    - position: {x: 3500, y: 0}
+player:
+     position: {x: 300, y: 100}
+boss:
+     type: wall
+     position: {x: 0, y: 750}
+     size: {width: 500, height: 500}

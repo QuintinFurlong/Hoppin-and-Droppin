@@ -19,6 +19,8 @@ private:
 	sf::RenderWindow m_window;
 	Player m_player;
 	sf::View m_view;
+	sf::Vector2f m_offsetView;
+	static const int CAM_SPEED = 8;
 	Enemies m_enemies;
 
 	LevelData currentLevel;

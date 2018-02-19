@@ -18,8 +18,13 @@ Player::Player()
 	m_body.setSize(sf::Vector2f(100, 150));
 	m_body.setPosition(300, 100);
 
+	m_healthBar.setFillColor(sf::Color::Magenta);
+	m_healthBar.setSize(sf::Vector2f(100, 0));
+	m_healthBar.setPosition(300, 100);
+
 	m_velo = sf::Vector2f(0, 0);
 	timer = 0;
+	health = MAX_HEALTH;
 }
 
 void Player::update(std::vector<sf::RectangleShape> t_blocks)
@@ -100,6 +105,11 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 			bulletVelo[index] = sf::Vector2f(0, 0);
 		}
 	}
+	m_healthBar.setPosition(m_body.getPosition());
+	if (health >= 0)
+	{
+		m_healthBar.setSize(sf::Vector2f(m_body.getSize().x, (m_body.getSize().y / MAX_HEALTH) * (MAX_HEALTH - health)));
+	}
 }
 
 void Player::render(sf::RenderWindow & t_window)
@@ -114,6 +124,7 @@ void Player::render(sf::RenderWindow & t_window)
 	}
 
 	t_window.draw(m_body);
+	t_window.draw(m_healthBar);
 }
 
 sf::RectangleShape Player::getBody()
@@ -167,6 +178,6 @@ void Player::takeDamage(bool t_hit)
 {
 	if (t_hit)
 	{
-		m_body.setFillColor(sf::Color::Magenta);
+		health--;
 	}
 }

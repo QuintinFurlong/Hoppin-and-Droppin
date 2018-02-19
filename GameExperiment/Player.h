@@ -7,6 +7,7 @@ class Player
 public:
 	static const int CLIP_SIZE = 10;
 	static const int FIRE_RATE = 30;
+	static const int MAX_HEALTH = 10;
 
 private:
 	sf::RectangleShape m_body;
@@ -15,6 +16,9 @@ private:
 	int currentBullet;
 	int timer;
 	sf::Vector2f m_velo;
+	int health;
+	sf::RectangleShape m_healthBar;
+	
 
 public:
 	Player();
