@@ -120,6 +120,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +128,7 @@
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="LevelLoader.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <ItemGroup>
