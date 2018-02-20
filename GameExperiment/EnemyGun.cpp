@@ -1,6 +1,6 @@
 #include "EnemyGun.h"
 
-EnemyGun::EnemyGun()
+EnemyGun::EnemyGun()//hi
 {
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
