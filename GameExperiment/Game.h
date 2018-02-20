@@ -6,6 +6,7 @@
 #include "Player.h"
 #include "Enemies.h"
 #include "Colour.h"
+#include"Gamestate.h"
 
 class Game
 {
