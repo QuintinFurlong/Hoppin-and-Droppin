@@ -21,6 +21,8 @@ Game::Game()
 			sprite.setFillColor(FLOOR_COLOUR);
 		else if (obstacle.m_type == "wall") 
 			sprite.setFillColor(WALL_COLOUR);
+		else if(obstacle.m_type == "roof")
+			sprite.setFillColor(ROOF_COLOUR);
 		else
 			sprite.setFillColor(PLATFORM_COLOUR);
 		m_wallSprites.push_back(sprite);
@@ -108,6 +110,35 @@ void Game::update(sf::Time t_time)
 				}
 
 			}
+		}
+	}
+
+	if (m_player.getHealth()==0)
+	{
+		currentLevel.m_enemies.clear();
+		currentLevel.m_worldPieces.clear();
+		if (!LevelLoader::load(1, currentLevel))
+		{
+			return;
+		}
+		m_player.reset(currentLevel.m_player.m_position);
+
+		m_enemies.create(currentLevel.m_enemies);
+		m_wallSprites.clear();
+		for (WorldData const & obstacle : currentLevel.m_worldPieces)
+		{
+			sf::RectangleShape sprite;
+			sprite.setPosition(obstacle.m_position);
+			sprite.setSize(obstacle.m_size);
+			if (obstacle.m_type == "floor")
+				sprite.setFillColor(FLOOR_COLOUR);
+			else if (obstacle.m_type == "wall")
+				sprite.setFillColor(WALL_COLOUR);
+			else if (obstacle.m_type == "roof")
+				sprite.setFillColor(ROOF_COLOUR);
+			else
+				sprite.setFillColor(PLATFORM_COLOUR);
+			m_wallSprites.push_back(sprite);
 		}
 	}
 }

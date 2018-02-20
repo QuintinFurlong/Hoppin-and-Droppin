@@ -88,10 +88,10 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 	m_body.move(m_velo);
 	m_velo.x *= .9;
 	m_velo.y += .98;
-	//wall colision
+	
 	for (int index = 0; index < t_blocks.size(); index++)
 	{
-		if (t_blocks.at(index).getFillColor() == WALL_COLOUR)
+		if (t_blocks.at(index).getFillColor() == WALL_COLOUR)//wall colision
 		{
 			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 			{
@@ -103,6 +103,14 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 				{
 					m_body.setPosition(t_blocks.at(index).getPosition().x - m_body.getSize().x, m_body.getPosition().y);
 				}
+			}
+		}
+		else if (t_blocks.at(index).getFillColor() == ROOF_COLOUR)//roof colision
+		{
+			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+			{
+				m_body.setPosition(m_body.getPosition().x, t_blocks.at(index).getPosition().y + t_blocks.at(index).getSize().y);
+				m_velo.y = 0;
 			}
 		}
 	}
@@ -194,4 +202,17 @@ void Player::takeDamage(bool t_hit)
 	{
 		health--;
 	}
+}
+
+int Player::getHealth()
+{
+	return health;
+}
+
+void Player::reset(sf::Vector2f t_pos)
+{
+	m_body.setPosition(t_pos);
+	m_velo = sf::Vector2f(0, 0);
+	timer = 0;
+	health = MAX_HEALTH;
 }

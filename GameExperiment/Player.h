@@ -33,4 +33,6 @@ public:
 	std::vector<sf::Vector2f> getBulletVelo();
 	void hit(bool t_hit);
 	void takeDamage(bool t_hit);
+	int getHealth();
+	void reset(sf::Vector2f t_pos);
 };

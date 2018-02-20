@@ -22,6 +22,7 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 	{
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
 		alive[i] = true;
+		bodies[i].setRotation(0);
 	}
 	bodies.resize(t_enemyData.size());
 	realMax = t_enemyData.size();
@@ -116,21 +117,6 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 			{
 				velo[i].x += MAX_MOVE;
 			}
-			//wall collision
-			/*for (int index = 0; index < t_blocks.size(); index++)
-			{
-				if (t_blocks.at(index).getFillColor() == WALL_COLOUR && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
-				{
-					if (velo[i].x > 0)
-					{
-						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().x, bodies[i].getPosition().y);
-					}
-					else
-					{
-						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
-					}
-				}
-			}*/
 
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
@@ -277,11 +263,13 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 							bodies[i].rotate(-2);
 						}
 					}
-					while(bodies[i].getGlobalBounds().intersects( t_blocks.at(index).getGlobalBounds()))
+					
+					while (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 					{
 						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
 						velo[i].y = 0;
 					}
+					
 					break;
 				}
 			}
