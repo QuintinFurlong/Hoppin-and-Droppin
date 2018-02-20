@@ -7,6 +7,7 @@ EnemyGun::EnemyGun()//hi
 		sf::RectangleShape tempBullet;
 		tempBullet.setSize(sf::Vector2f(20, 20));
 		tempBullet.setFillColor(sf::Color(192, 192, 192));
+		tempBullet.setPosition(-100,-100);
 		sf::Vector2f tempVelo;
 		tempVelo = sf::Vector2f(0, 0);
 		bullet.push_back(tempBullet);
