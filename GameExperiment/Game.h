@@ -5,6 +5,7 @@
 #include "LevelLoader.h"
 #include "Player.h"
 #include "Enemies.h"
+#include "Colour.h"
 
 class Game
 {

@@ -82,6 +82,9 @@ void EnemyGun::render(sf::RenderWindow & t_window)
 {
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
-		t_window.draw(bullet.at(index));
+		if (bulletVelo.at(index) != sf::Vector2f(0,0))
+		{
+			t_window.draw(bullet.at(index));
+		}
 	}
 }

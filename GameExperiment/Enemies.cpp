@@ -105,6 +105,7 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;
+			//left and right movement
 			if (t_player.getPosition().x + t_player.getSize().x < bodies[i].getPosition().x
 				&& sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) < 1000)
 			{
@@ -115,10 +116,10 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 			{
 				velo[i].x += MAX_MOVE;
 			}
-
-			for (int index = 1; index < t_blocks.size(); index++)
+			//wall collision
+			/*for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (t_blocks.at(index).getFillColor() == sf::Color::Green && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+				if (t_blocks.at(index).getFillColor() == WALL_COLOUR && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 				{
 					if (velo[i].x > 0)
 					{
@@ -129,11 +130,11 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
 					}
 				}
-			}
+			}*/
 
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (t_blocks.at(index).getFillColor() == sf::Color::Green || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y))
+				if (t_blocks.at(index).getFillColor() == FLOOR_COLOUR || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y))
 				{
 					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && velo[i].y >= 0 &&
 						bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y)
@@ -186,6 +187,24 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 			}
 			
 			bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
+
+			for (int index = 0; index < t_blocks.size(); index++)
+			{
+				if (t_blocks.at(index).getFillColor() == WALL_COLOUR)
+				{
+					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					{
+						if (bodies[i].getPosition().x > t_blocks.at(index).getPosition().x && bodies[i].getPosition().x < t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x)
+						{
+							bodies[i].setPosition(t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x, bodies[i].getPosition().y);
+						}
+						else if(bodies[i].getPosition().x < t_blocks.at(index).getPosition().x && bodies[i].getPosition().x + bodies[i].getSize().x > t_blocks.at(index).getPosition().x )
+						{
+							bodies[i].setPosition(t_blocks.at(index).getPosition().x - bodies[i].getSize().x, bodies[i].getPosition().y);
+						}
+					}
+				}
+			}
 			//slight spread
 			for (int comp = 0; comp < realMax; comp++)
 			{
@@ -219,29 +238,28 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 			bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (index != 0)
+				
+				if (t_blocks.at(index).getFillColor() == WALL_COLOUR && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 				{
-					if (t_blocks.at(index).getFillColor() == sf::Color::Green && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					if (velo[i].x > 0)
 					{
-						if (velo[i].x > 0)
+						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().y, bodies[i].getPosition().y);
+						if (bodies[i].getRotation() == 90)
 						{
-							bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().y, bodies[i].getPosition().y);
-							if (bodies[i].getRotation() == 90)
-							{
-								bodies[i].move(-bodies[i].getSize().y, 0);
-							}
+							bodies[i].move(bodies[i].getSize().y, 0);
 						}
-						else
-						{
-							bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
-							if (bodies[i].getRotation() == 90)
-							{
-								bodies[i].move(bodies[i].getSize().y, 0);
-							}
-						}
-						break;
 					}
+					else
+					{
+						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
+						if (bodies[i].getRotation() == 90)
+						{
+							bodies[i].move(bodies[i].getSize().y, 0);
+						}
+					}
+					break;
 				}
+				
 
 				if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 				{

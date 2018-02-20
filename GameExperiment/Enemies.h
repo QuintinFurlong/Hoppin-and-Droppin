@@ -3,6 +3,7 @@
 #include <SFML/Graphics.hpp>
 #include "LevelLoader.h"
 #include "EnemyGun.h"
+#include "Colour.h"
 
 class Enemies
 {

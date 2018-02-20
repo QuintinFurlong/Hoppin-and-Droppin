@@ -18,9 +18,11 @@ Game::Game()
 		sprite.setPosition(obstacle.m_position);
 		sprite.setSize(obstacle.m_size);
 		if (obstacle.m_type == "floor")
-			sprite.setFillColor(sf::Color::Green);
+			sprite.setFillColor(FLOOR_COLOUR);
+		else if (obstacle.m_type == "wall") 
+			sprite.setFillColor(WALL_COLOUR);
 		else
-			sprite.setFillColor(sf::Color(139, 69, 19));
+			sprite.setFillColor(PLATFORM_COLOUR);
 		m_wallSprites.push_back(sprite);
 	}
 	m_offsetView = sf::Vector2f(0, 0);

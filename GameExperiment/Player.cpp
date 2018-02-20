@@ -40,7 +40,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 	for (int index = 0; index < t_blocks.size(); index++)
 	{
 		//checks if platform and if left thumb stick is pointing down
-		if (t_blocks.at(index).getFillColor() == sf::Color::Green || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		if (t_blocks.at(index).getFillColor() == FLOOR_COLOUR || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
 		{
 			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds())  //if player collids with objects and if player is going down
 				)//ask me about it murt, i just cant in text
@@ -88,9 +88,23 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 	m_body.move(m_velo);
 	m_velo.x *= .9;
 	m_velo.y += .98;
-	if (m_body.getPosition().x < 0)
+	//wall colision
+	for (int index = 0; index < t_blocks.size(); index++)
 	{
-		m_body.setPosition(0, m_body.getPosition().y);
+		if (t_blocks.at(index).getFillColor() == WALL_COLOUR)
+		{
+			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+			{
+				if(m_body.getPosition().x > t_blocks.at(index).getPosition().x && m_body.getPosition().x < t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x)
+				{
+					m_body.setPosition(t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x, m_body.getPosition().y);
+				}
+				else
+				{
+					m_body.setPosition(t_blocks.at(index).getPosition().x - m_body.getSize().x, m_body.getPosition().y);
+				}
+			}
+		}
 	}
 
 	for (int index = 0; index < CLIP_SIZE; index++)

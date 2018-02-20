@@ -124,6 +124,7 @@
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Colour.h" />
     <ClInclude Include="Enemies.h" />
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="Game.h" />
