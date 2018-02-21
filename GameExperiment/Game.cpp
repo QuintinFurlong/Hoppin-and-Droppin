@@ -63,86 +63,89 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_time)
 {
-	m_player.update(m_wallSprites);
-	m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
-	m_player.hit(m_boss.update(m_wallSprites, m_player.getBullets()));
-	m_player.takeDamage(m_enemies.hit(m_player.getBody()));
-	m_player.bossTouch(m_boss.getBody());
-
-	sf::Vector2f temp(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f
-		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
-	
-	if (m_offsetView != sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3))
+	if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
 	{
-		m_offsetView += sf::Vector2f((temp.x - m_view.getCenter().x) / CAM_SPEED, (temp.y - m_view.getCenter().y) / CAM_SPEED);
-	}
-	m_view.setCenter(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f + m_offsetView);
-	m_view.setSize(1400, 800);
-	m_window.setView(m_view);
+		m_player.update(m_wallSprites);
+		m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
+		m_player.hit(m_boss.update(m_wallSprites, m_player.getBullets()));
+		m_player.takeDamage(m_enemies.hit(m_player.getBody()));
+		m_player.bossTouch(m_boss.getBody());
 
-	//for jumping on bodies
+		sf::Vector2f temp(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f
+			+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
 
-	for (int index = 0; index < m_enemies.getRealSize(); index++)
-	{
-		//checks if enemy is dead and stick not pointing down
-		if (!m_enemies.getAlive(index) && sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+		if (m_offsetView != sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3))
 		{
-			if (m_player.getBody().getGlobalBounds().intersects(m_enemies.getBody(index).getGlobalBounds()))  //if player collids with enemy
-			{
-				if (m_player.getVelo().y >= 0)//player moving down
-				{
-					if (m_enemies.getBody(index).getRotation() == 90)
-					{ 
-						if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_enemies.getBody(index).getPosition().y < m_player.getVelo().y)
-						{
-							m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
-								m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
-							m_player.stopFalling();
-						}
-					}
-					else if (m_enemies.getBody(index).getRotation() == 270)
-					{
-						if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y - 
-							m_enemies.getBody(index).getPosition().y + m_enemies.getBody(index).getSize().x < m_player.getVelo().y)
-						{
-							m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
-								m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
-							m_player.stopFalling();
-						}
-					}
-				}
+			m_offsetView += sf::Vector2f((temp.x - m_view.getCenter().x) / CAM_SPEED, (temp.y - m_view.getCenter().y) / CAM_SPEED);
+		}
+		m_view.setCenter(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f + m_offsetView);
+		m_view.setSize(1400, 800);
+		m_window.setView(m_view);
 
+		//for jumping on bodies
+
+		for (int index = 0; index < m_enemies.getRealSize(); index++)
+		{
+			//checks if enemy is dead and stick not pointing down
+			if (!m_enemies.getAlive(index) && sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
+			{
+				if (m_player.getBody().getGlobalBounds().intersects(m_enemies.getBody(index).getGlobalBounds()))  //if player collids with enemy
+				{
+					if (m_player.getVelo().y >= 0)//player moving down
+					{
+						if (m_enemies.getBody(index).getRotation() == 90)
+						{
+							if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y - m_enemies.getBody(index).getPosition().y < m_player.getVelo().y)
+							{
+								m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
+									m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+								m_player.stopFalling();
+							}
+						}
+						else if (m_enemies.getBody(index).getRotation() == 270)
+						{
+							if (m_player.getBody().getPosition().y + m_player.getBody().getSize().y -
+								m_enemies.getBody(index).getPosition().y + m_enemies.getBody(index).getSize().x < m_player.getVelo().y)
+							{
+								m_player.setPosition(sf::Vector2f(m_player.getBody().getPosition().x,
+									m_enemies.getBody(index).getGlobalBounds().top - m_player.getBody().getSize().y));
+								m_player.stopFalling();
+							}
+						}
+					}
+
+				}
 			}
 		}
-	}
-	//player is dead
-	if (m_player.getHealth()==0)
-	{
-		currentLevel.m_enemies.clear();
-		currentLevel.m_worldPieces.clear();
-		if (!LevelLoader::load(1, currentLevel))
+		//player is dead
+		if (m_player.getHealth() == 0)
 		{
-			return;
-		}
-		m_player.reset(currentLevel.m_player.m_position);
+			currentLevel.m_enemies.clear();
+			currentLevel.m_worldPieces.clear();
+			if (!LevelLoader::load(1, currentLevel))
+			{
+				return;
+			}
+			m_player.reset(currentLevel.m_player.m_position);
 
-		m_enemies.create(currentLevel.m_enemies);
-		m_boss.create(currentLevel.m_boss);
-		m_wallSprites.clear();
-		for (WorldData const & obstacle : currentLevel.m_worldPieces)
-		{
-			sf::RectangleShape sprite;
-			sprite.setPosition(obstacle.m_position);
-			sprite.setSize(obstacle.m_size);
-			if (obstacle.m_type == "floor")
-				sprite.setFillColor(FLOOR_COLOUR);
-			else if (obstacle.m_type == "wall")
-				sprite.setFillColor(WALL_COLOUR);
-			else if (obstacle.m_type == "roof")
-				sprite.setFillColor(ROOF_COLOUR);
-			else
-				sprite.setFillColor(PLATFORM_COLOUR);
-			m_wallSprites.push_back(sprite);
+			m_enemies.create(currentLevel.m_enemies);
+			m_boss.create(currentLevel.m_boss);
+			m_wallSprites.clear();
+			for (WorldData const & obstacle : currentLevel.m_worldPieces)
+			{
+				sf::RectangleShape sprite;
+				sprite.setPosition(obstacle.m_position);
+				sprite.setSize(obstacle.m_size);
+				if (obstacle.m_type == "floor")
+					sprite.setFillColor(FLOOR_COLOUR);
+				else if (obstacle.m_type == "wall")
+					sprite.setFillColor(WALL_COLOUR);
+				else if (obstacle.m_type == "roof")
+					sprite.setFillColor(ROOF_COLOUR);
+				else
+					sprite.setFillColor(PLATFORM_COLOUR);
+				m_wallSprites.push_back(sprite);
+			}
 		}
 	}
 }
@@ -151,15 +154,21 @@ void Game::update(sf::Time t_time)
 void Game::render()
 {
 	m_window.clear();
-
-	m_enemies.render(m_window);
-	m_boss.render(m_window);
-	m_player.render(m_window);
-	
-	for (const auto &m_wallVector : m_wallSprites)
+	if (m_gamestate == GameState::MainMenu)//if main menu mode
 	{
-		m_window.draw(m_wallVector);
+		m_mainMenu.render(m_window);//draw main menu
 	}
 
+	if (m_gamestate == GameState::GamePlay)//if gameplay mode draw game
+	{
+		m_enemies.render(m_window);
+		m_boss.render(m_window);
+		m_player.render(m_window);
+
+		for (const auto &m_wallVector : m_wallSprites)
+		{
+			m_window.draw(m_wallVector);
+		}
+	}
 	m_window.display();
 }
