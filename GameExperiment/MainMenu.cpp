@@ -72,8 +72,6 @@ void MainMenu::update()
 
 void MainMenu::render(sf::RenderWindow & t_window)
 {
-	t_window.clear();
-
 	if (!displayControls && !displayLore)//if neither y nor x has been pressed
 	{
 		t_window.draw(m_title);
@@ -92,6 +90,4 @@ void MainMenu::render(sf::RenderWindow & t_window)
 	{
 		t_window.draw(m_backStoryDisplay);//display lore
 	}
-
-	t_window.display();
 }
