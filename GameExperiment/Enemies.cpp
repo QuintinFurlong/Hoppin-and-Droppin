@@ -18,13 +18,14 @@ Enemies::Enemies()
 
 void Enemies::create(std::vector<EnemyData> t_enemyData)
 {
+	bodies.resize(t_enemyData.size());
 	for (int i = 0; i < t_enemyData.size(); i++)
 	{
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
 		alive[i] = true;
 		bodies[i].setRotation(0);
 	}
-	bodies.resize(t_enemyData.size());
+	
 	realMax = t_enemyData.size();
 }
 /// <summary>
@@ -120,7 +121,8 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
-				if (t_blocks.at(index).getFillColor() == FLOOR_COLOUR || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y))
+				if (t_blocks.at(index).getFillColor() == FLOOR_COLOUR || (t_player.getPosition().y < bodies[i].getPosition().y + bodies[i].getSize().y ||
+					sqrt(pow(t_player.getPosition().x - bodies[i].getPosition().x, 2) + pow(t_player.getPosition().y - bodies[i].getPosition().y, 2)) > 1000))
 				{
 					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && velo[i].y >= 0 &&
 						bodies[i].getPosition().y + bodies[i].getSize().y - t_blocks.at(index).getPosition().y < velo[i].y)
@@ -128,6 +130,10 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, t_blocks.at(index).getGlobalBounds().top - bodies[i].getSize().y));
 						velo[i].y = 0;
 					}
+				}
+				else
+				{
+					int t = 0;
 				}
 			}
 			for (int index = 0; index < bodies.size(); index++)
@@ -225,27 +231,34 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
 				
-				if (t_blocks.at(index).getFillColor() == WALL_COLOUR && bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+				if (t_blocks.at(index).getFillColor() == WALL_COLOUR)//wall colision
 				{
-					if (velo[i].x > 0)
+					if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 					{
-						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left - bodies[i].getSize().y, bodies[i].getPosition().y);
-						if (bodies[i].getRotation() == 90)
+						if (bodies[i].getRotation() <= 90 && bodies[i].getRotation() > 0)
 						{
-							bodies[i].move(bodies[i].getSize().y, 0);
+							if (bodies[i].getPosition().x - bodies[i].getSize().y > t_blocks.at(index).getPosition().x)
+							{
+								bodies[i].setPosition(t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x + bodies[i].getSize().y, bodies[i].getPosition().y);
+							}
+							else
+							{
+								bodies[i].setPosition(t_blocks.at(index).getPosition().x, bodies[i].getPosition().y);
+							}
+						}
+						else
+						{
+							if (bodies[i].getPosition().x > t_blocks.at(index).getPosition().x)
+							{
+								bodies[i].setPosition(t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x, bodies[i].getPosition().y);
+							}
+							else
+							{
+								bodies[i].setPosition(t_blocks.at(index).getPosition().x - bodies[i].getSize().y, bodies[i].getPosition().y);
+							}
 						}
 					}
-					else
-					{
-						bodies[i].setPosition(t_blocks.at(index).getGlobalBounds().left + t_blocks.at(index).getGlobalBounds().width, bodies[i].getPosition().y);
-						if (bodies[i].getRotation() == 90)
-						{
-							bodies[i].move(bodies[i].getSize().y, 0);
-						}
-					}
-					break;
 				}
-				
 
 				if (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 				{
@@ -264,13 +277,11 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 						}
 					}
 					
-					while (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+					while (bodies[i].getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()) && t_blocks.at(index).getFillColor() != WALL_COLOUR)
 					{
 						bodies[i].setPosition(sf::Vector2f(bodies[i].getPosition().x, bodies[i].getPosition().y - 1));
 						velo[i].y = 0;
 					}
-					
-					break;
 				}
 			}
 			//corpse platforms

@@ -63,9 +63,18 @@ void Boss::create(BossData t_bossData)
 		body.setFillColor(BOSS_WALL_COLOUR);
 		health = WALL_HEALTH;
 	}
+	else if(t_bossData.m_type == "spider")
+	{
+		body.setFillColor(BOSS_SPIDER_INSIDE_COLOUR);
+		health = SPIDER_HEALTH;
+	}
 	deadBody = body;
 	deadBody.setSize(sf::Vector2f(body.getSize().x, 0));
 	deadBody.setFillColor(sf::Color(body.getFillColor().r / 2, body.getFillColor().g / 2, body.getFillColor().b/2));
+	if(t_bossData.m_type == "spider")
+	{
+		deadBody.setFillColor(BOSS_SPIDER_OUTSIDE_COLOUR);
+	}
 }
 
 int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets)
@@ -85,7 +94,14 @@ int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::Recta
 	deadBody.setPosition(body.getPosition());
 	if (health >= 0)
 	{
-		deadBody.setSize(sf::Vector2f(body.getSize().x, (body.getSize().y / WALL_HEALTH) * (WALL_HEALTH - health)));
+		if (body.getFillColor() == BOSS_WALL_COLOUR)
+		{
+			deadBody.setSize(sf::Vector2f(body.getSize().x, (body.getSize().y / WALL_HEALTH) * (WALL_HEALTH - health)));
+		}
+		else if (body.getFillColor() == BOSS_SPIDER_INSIDE_COLOUR)
+		{
+			deadBody.setSize(sf::Vector2f(body.getSize().x, (body.getSize().y / SPIDER_HEALTH) * (SPIDER_HEALTH - health)));
+		}
 	}
 	return temp;
 }

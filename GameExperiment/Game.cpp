@@ -4,7 +4,7 @@
 Game::Game()
 	: m_window{ sf::VideoMode{ 1400, 800 }, "Experiment" }
 {
-	if (!LevelLoader::load(1, currentLevel))
+	if (!LevelLoader::load(2, currentLevel))
 	{
 		return;
 	}
@@ -122,7 +122,7 @@ void Game::update(sf::Time t_time)
 		{
 			currentLevel.m_enemies.clear();
 			currentLevel.m_worldPieces.clear();
-			if (!LevelLoader::load(1, currentLevel))
+			if (!LevelLoader::load(2, currentLevel))
 			{
 				return;
 			}
@@ -153,7 +153,7 @@ void Game::update(sf::Time t_time)
 
 void Game::render()
 {
-	m_window.clear();
+	m_window.clear(SKY_COLOUR);
 	if (m_gamestate == GameState::MainMenu)//if main menu mode
 	{
 		m_mainMenu.render(m_window);//draw main menu

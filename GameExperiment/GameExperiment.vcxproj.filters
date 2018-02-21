@@ -73,5 +73,17 @@
     <None Include="levels\level1.yaml">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="levels\level2.yaml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="levels\level3.yaml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="levels\level4.yaml">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="levels\level5.yaml">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

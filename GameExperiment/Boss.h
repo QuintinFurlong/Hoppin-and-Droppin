@@ -9,6 +9,7 @@ class Boss
 public:
 	static const int MAX_MOVE = 1;
 	static const int WALL_HEALTH = 20;
+	static const int SPIDER_HEALTH = 3;
 
 private:
 	sf::RectangleShape  body;

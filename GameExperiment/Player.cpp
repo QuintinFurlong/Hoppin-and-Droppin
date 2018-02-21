@@ -95,7 +95,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 		{
 			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 			{
-				if(m_body.getPosition().x > t_blocks.at(index).getPosition().x && m_body.getPosition().x < t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x)
+				if(m_body.getPosition().x > t_blocks.at(index).getPosition().x)// && m_body.getPosition().x < t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x)
 				{
 					m_body.setPosition(t_blocks.at(index).getPosition().x + t_blocks.at(index).getSize().x, m_body.getPosition().y);
 				}
@@ -110,7 +110,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 			{
 				m_body.setPosition(m_body.getPosition().x, t_blocks.at(index).getPosition().y + t_blocks.at(index).getSize().y);
-				m_velo.y = 0;
+				m_velo.y = 0.1;//zero allow jumping when touching roof
 			}
 		}
 	}

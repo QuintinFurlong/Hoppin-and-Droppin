@@ -137,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="levels\level1.yaml" />
+    <None Include="levels\level2.yaml" />
+    <None Include="levels\level3.yaml" />
+    <None Include="levels\level4.yaml" />
+    <None Include="levels\level5.yaml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
