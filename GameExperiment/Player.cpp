@@ -179,20 +179,12 @@ std::vector<sf::Vector2f> Player::getBulletVelo()
 	return bulletVelo;
 }
 
-void Player::hit(bool t_hit)
+void Player::hit(int t_hit)
 {
-	if (t_hit)
+	if (t_hit != -1)
 	{
-		if (currentBullet != 0)
-		{
-			bullet.at(currentBullet - 1).setPosition(-1000, -1000);
-			bulletVelo.at(currentBullet - 1) = sf::Vector2f(0, 0);
-		}
-		else
-		{
-			bullet.at(currentBullet - 1+ CLIP_SIZE).setPosition(-1000, -1000);
-			bulletVelo.at(currentBullet - 1+ CLIP_SIZE) = sf::Vector2f(0, 0);
-		}
+		bullet.at(t_hit).setPosition(-1000, -1000);
+		bulletVelo.at(t_hit) = sf::Vector2f(0, 0);
 	}
 }
 
@@ -215,4 +207,24 @@ void Player::reset(sf::Vector2f t_pos)
 	m_velo = sf::Vector2f(0, 0);
 	timer = 0;
 	health = MAX_HEALTH;
+}
+
+void Player::bossTouch(sf::RectangleShape t_boss)
+{
+	if(m_body.getGlobalBounds().intersects(t_boss.getGlobalBounds()))
+	{
+		health--;
+		if(m_body.getPosition().x + m_body.getSize().x/2 > t_boss.getPosition().x + t_boss.getSize().x / 2)
+		{
+			m_velo.x = 30;
+		}
+		else
+		{
+			m_velo.x = -30;
+		}
+		if (m_body.getPosition().y + m_body.getSize().y / 2 < t_boss.getPosition().y + t_boss.getSize().y / 2)
+		{
+			m_velo.y = -30;
+		}
+	}
 }

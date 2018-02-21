@@ -7,6 +7,7 @@
 #include "Enemies.h"
 #include "Colour.h"
 #include"Gamestate.h"
+#include "Boss.h"
 
 class Game
 {
@@ -24,6 +25,7 @@ private:
 	sf::Vector2f m_offsetView;
 	static const int CAM_SPEED = 8;
 	Enemies m_enemies;
+	Boss m_boss;
 
 	LevelData currentLevel;
 	std::vector<sf::RectangleShape> m_wallSprites;

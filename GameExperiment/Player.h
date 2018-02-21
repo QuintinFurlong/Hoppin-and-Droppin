@@ -31,8 +31,9 @@ public:
 	void stopFalling();
 	std::vector<sf::RectangleShape> getBullets();
 	std::vector<sf::Vector2f> getBulletVelo();
-	void hit(bool t_hit);
+	void hit(int t_hit);
 	void takeDamage(bool t_hit);
 	int getHealth();
 	void reset(sf::Vector2f t_pos);
+	void bossTouch(sf::RectangleShape t_boss);
 };

@@ -11,6 +11,7 @@ Game::Game()
 	m_player.setPosition(currentLevel.m_player.m_position);
 
 	m_enemies.create(currentLevel.m_enemies);
+	m_boss.create(currentLevel.m_boss);
 
 	for (WorldData const & obstacle : currentLevel.m_worldPieces)
 	{
@@ -64,7 +65,9 @@ void Game::update(sf::Time t_time)
 {
 	m_player.update(m_wallSprites);
 	m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));
+	m_player.hit(m_boss.update(m_wallSprites, m_player.getBullets()));
 	m_player.takeDamage(m_enemies.hit(m_player.getBody()));
+	m_player.bossTouch(m_boss.getBody());
 
 	sf::Vector2f temp(m_player.getBody().getPosition() + m_player.getBody().getSize() / 2.0f
 		+ sf::Vector2f(sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::U) * 3, sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::R) * 3));
@@ -112,7 +115,7 @@ void Game::update(sf::Time t_time)
 			}
 		}
 	}
-
+	//player is dead
 	if (m_player.getHealth()==0)
 	{
 		currentLevel.m_enemies.clear();
@@ -124,6 +127,7 @@ void Game::update(sf::Time t_time)
 		m_player.reset(currentLevel.m_player.m_position);
 
 		m_enemies.create(currentLevel.m_enemies);
+		m_boss.create(currentLevel.m_boss);
 		m_wallSprites.clear();
 		for (WorldData const & obstacle : currentLevel.m_worldPieces)
 		{
@@ -149,6 +153,7 @@ void Game::render()
 	m_window.clear();
 
 	m_enemies.render(m_window);
+	m_boss.render(m_window);
 	m_player.render(m_window);
 	
 	for (const auto &m_wallVector : m_wallSprites)

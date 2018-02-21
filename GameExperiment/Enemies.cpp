@@ -35,9 +35,9 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 /// <param name="t_bullets"></param>
 /// <param name="t_bulletVelo"></param>
 /// <returns></returns>true if enemy is hit by the players bullet
-bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo)
+int Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo)
 {
-	bool temp = false;
+	int temp = -1;
 	for (int enmies = 0; enmies < bodies.size(); enmies++)
 	{
 		for (int bullies = 0; bullies < t_bullets.size(); bullies++)
@@ -46,7 +46,7 @@ bool Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape
 			{
 				velo[enmies] += sf::Vector2f(t_bulletVelo.at(bullies).x, t_bulletVelo.at(bullies).y);
 				alive[enmies] = false;
-				temp = true;
+				temp = bullies;
 				if (t_bulletVelo.at(bullies).x < 0 && (bodies[enmies].getRotation() != 90 && bodies[enmies].getRotation() != 270))
 				{
 					toTheRight[enmies] = false;
@@ -70,7 +70,7 @@ void Enemies::render(sf::RenderWindow & t_window)
 	}
 }
 
-int Enemies::hit(sf::RectangleShape t_player)
+bool Enemies::hit(sf::RectangleShape t_player)
 {
 	bool temp = false;
 	for (int i = 0; i < bodies.size(); i++)
@@ -172,8 +172,8 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 				velo[i].y = -bodies[i].getSize().y / 6;
 			}
 			
-			bodies[i].setPosition(bodies[i].getPosition() + velo[i]);
-
+			bodies[i].move(velo[i]);
+			//wall collision
 			for (int index = 0; index < t_blocks.size(); index++)
 			{
 				if (t_blocks.at(index).getFillColor() == WALL_COLOUR)

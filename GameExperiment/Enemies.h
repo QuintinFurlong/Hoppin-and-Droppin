@@ -25,10 +25,10 @@ private:
 public:
 	Enemies();
 	void create(std::vector<EnemyData> t_enemyData);
-	bool update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo);
+	int update(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets, std::vector<sf::Vector2f> t_bulletVelo);
 	void render(sf::RenderWindow & t_window);
 
-	int hit(sf::RectangleShape t_player);
+	bool hit(sf::RectangleShape t_player);
 	bool getAlive(int t_index);
 	sf::RectangleShape getBody(int t_index);
 	int getRealSize();

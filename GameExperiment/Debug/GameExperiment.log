@@ -1,3 +1,17 @@
-﻿  EnemyGun.cpp
-  GameExperiment.vcxproj -> C:\Users\c00157047\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
-  GameExperiment.vcxproj -> C:\Users\c00157047\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)
+﻿  Player.cpp
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(40): warning C4018: '<': signed/unsigned mismatch
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(89): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(90): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\player.cpp(92): warning C4018: '<': signed/unsigned mismatch
+  Game.cpp
+  Boss.cpp
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(7): warning C4305: '*=': truncation from 'double' to 'float'
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(13): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(15): warning C4018: '<': signed/unsigned mismatch
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(30): warning C4018: '<': signed/unsigned mismatch
+c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(74): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Skipping... (no relevant changes detected)
+  Main.cpp
+  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
+  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)
