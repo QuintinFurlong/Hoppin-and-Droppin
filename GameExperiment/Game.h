@@ -9,6 +9,7 @@
 #include"Gamestate.h"
 #include "Boss.h"
 #include"MainMenu.h"
+#include"Level.h"
 
 class Game
 {
@@ -32,8 +33,9 @@ private:
 	std::vector<sf::RectangleShape> m_wallSprites;
 	std::vector<sf::RectangleShape *> m_wallVector;
 
+	Level m_level;
 	MainMenu m_mainMenu;//intance of main menu
-	GameState m_gamestate = GameState::GamePlay; //gamestate, used to change between menus
+	GameState m_gamestate = GameState::Levels; //gamestate, used to change between menus
 };
 
 #endif // !GAME
