@@ -154,6 +154,10 @@ void Game::update(sf::Time t_time)
 void Game::render()
 {
 	m_window.clear();
+	if (m_gamestate == GameState::Levels)
+	{
+		m_level.render(m_window);
+	}
 	if (m_gamestate == GameState::MainMenu)//if main menu mode
 	{
 		m_mainMenu.render(m_window);//draw main menu

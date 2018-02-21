@@ -1,11 +1,13 @@
 #pragma once
 #include"SFML\Graphics.hpp"
+#include<iostream>
 
 class Level
 {
 public:
 	Level();
-	~Level();
+	void update();
+	void render(sf::RenderWindow & t_window);
 
 private:
 	sf::RectangleShape m_buttons[5]; //buttons for level selection
