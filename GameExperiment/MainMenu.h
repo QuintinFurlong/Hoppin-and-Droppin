@@ -1,4 +1,5 @@
 #pragma once
+#pragma once
 #include"SFML\Graphics.hpp"
 #include<iostream>
 
@@ -17,9 +18,11 @@ public:
 	sf::Text m_backStory; //text used for access to backstory info
 	sf::Text m_controlScheme; //text used for describe controls
 	sf::Text m_backStoryDisplay; //used to display lore
+	sf::Text m_levelSelect; //text used for level button
 
 	bool displayControls = false; //used to swap between texts
 	bool displayLore = false; //used to swap between texts
+
 
 	sf::RectangleShape m_buttons[3];//buttons for the menu
 };

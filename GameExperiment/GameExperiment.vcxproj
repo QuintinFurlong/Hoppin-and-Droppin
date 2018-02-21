@@ -119,6 +119,7 @@
     <ClCompile Include="Enemies.cpp" />
     <ClCompile Include="EnemyGun.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainMenu.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="EnemyGun.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Gamestate.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
