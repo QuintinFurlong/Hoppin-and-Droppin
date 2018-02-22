@@ -58,7 +58,7 @@ MainMenu::MainMenu()
 
 }
 
-void MainMenu::update()
+void MainMenu::update(sf::Time &t_time)
 {
 	if (sf::Joystick::isButtonPressed(0, 0))
 	{
@@ -73,6 +73,42 @@ void MainMenu::update()
 	if (sf::Joystick::isButtonPressed(0, 3))
 	{
 		displayLore = true;
+	}
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) > 20)
+	{
+		if (stickMoved)
+		{
+			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			count++;
+			stickMoved = false;
+		}
+	}
+	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < -20)
+	{
+		if (stickMoved)
+		{
+			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			count--;
+			stickMoved = false;
+		}
+	}
+	else
+	{
+		stickMoved = true;
+	}
+
+	if (count > 2)
+	{
+		count = 0;
+	}
+	else if (count < 0)
+	{
+		count = 2;
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		m_buttons[i].setOutlineColor(sf::Color::Blue);
+		m_buttons[count].setOutlineColor(sf::Color::Red);
 	}
 }
 

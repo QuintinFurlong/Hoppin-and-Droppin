@@ -8,18 +8,24 @@ Level::Level()
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		m_text[i].setString("level");
 		m_text[i].setFont(m_font);
 		m_text[i].setCharacterSize(24);
 		m_text[i].setPosition(675, i * 100 + 200);
 		m_text[i].setFillColor(sf::Color::Blue);
-		
+
 		m_buttons[i].setPosition(sf::Vector2f(400, i * 100 + 200));
 		m_buttons[i].setSize(sf::Vector2f(600, 60));
 		m_buttons[i].setFillColor(sf::Color::White);
 		m_buttons[i].setOutlineColor(sf::Color::Blue);
 		m_buttons[i].setOutlineThickness(5);
 	}
+
+	m_text[0].setString("Level 1");
+	m_text[1].setString("Level 2");
+	m_text[2].setString("Level 3");
+	m_text[3].setString("Level 4");
+	m_text[4].setString("Level 5");
+
 	m_header.setString("Please Select a Level");
 	m_header.setFont(m_font);
 	m_header.setCharacterSize(36);
@@ -27,8 +33,44 @@ Level::Level()
 	m_header.setFillColor(sf::Color::Red);
 }
 
-void Level::update()
+void Level::update(sf::Time t_time)
 {
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) > 20)
+	{
+		if (stickMoved)
+		{
+			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			count++;
+			stickMoved = false;
+		}
+	}
+	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < -20)
+	{
+		if (stickMoved)
+		{
+			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			count--;
+			stickMoved = false;
+		}
+	}
+	else
+	{
+		stickMoved = true;
+	}
+
+	if (count > 4)
+	{
+		count = 0;
+	}
+	else if (count < 0)
+	{
+		count = 4;
+	}
+	for (int i = 0; i < 5; i++)
+	{
+		m_buttons[i].setOutlineColor(sf::Color::Blue);
+		m_buttons[count].setOutlineColor(sf::Color::Red);
+	}
 }
 
 void Level::render(sf::RenderWindow & t_window)
