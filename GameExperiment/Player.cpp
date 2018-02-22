@@ -37,7 +37,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 	{
 		m_velo.x += sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::X) / 100;
 	}
-	for (int index = 0; index < t_blocks.size(); index++)
+	for (unsigned int index = 0; index < t_blocks.size(); index++)
 	{
 		//checks if platform and if left thumb stick is pointing down
 		if (t_blocks.at(index).getFillColor() == FLOOR_COLOUR || sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < 50)
@@ -86,10 +86,10 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 	}
 
 	m_body.move(m_velo);
-	m_velo.x *= .9;
-	m_velo.y += .98;
+	m_velo.x *= 0.9f;
+	m_velo.y += 0.98f;
 	
-	for (int index = 0; index < t_blocks.size(); index++)
+	for (unsigned int index = 0; index < t_blocks.size(); index++)
 	{
 		if (t_blocks.at(index).getFillColor() == WALL_COLOUR)//wall colision
 		{
@@ -110,7 +110,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 			if (m_body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
 			{
 				m_body.setPosition(m_body.getPosition().x, t_blocks.at(index).getPosition().y + t_blocks.at(index).getSize().y);
-				m_velo.y = 0.1;//zero allow jumping when touching roof
+				m_velo.y = 0.1f;//zero allow jumping when touching roof
 			}
 		}
 	}

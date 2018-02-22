@@ -4,7 +4,7 @@
 Game::Game()
 	: m_window{ sf::VideoMode{ 1400, 800 }, "Experiment" }
 {
-	levelNumber = 4;
+	levelNumber = 5;
 	if (!LevelLoader::load(levelNumber, currentLevel))
 	{
 		return;

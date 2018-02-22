@@ -7,6 +7,7 @@ Enemies::Enemies()
 		sf::RectangleShape tempBody;
 		tempBody.setSize(sf::Vector2f(100, 150));
 		tempBody.setFillColor(sf::Color::Red);
+		tempBody.setPosition(-1000,0);
 		alive[i] = false;
 		velo[i] = sf::Vector2f(0, 0);
 		tempBody.setOutlineThickness(1);
@@ -18,14 +19,17 @@ Enemies::Enemies()
 
 void Enemies::create(std::vector<EnemyData> t_enemyData)
 {
-	bodies.resize(t_enemyData.size());
-	for (int i = 0; i < t_enemyData.size(); i++)
+	for (int i = 0; i < MAX_ENEMIES; i++) 
+	{
+		bodies[i].setFillColor(sf::Color::Transparent);
+	}
+	for (unsigned int i = 0; i < t_enemyData.size(); i++)
 	{
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
+		bodies[i].setFillColor(sf::Color::Red);
 		alive[i] = true;
 		bodies[i].setRotation(0);
 	}
-	
 	realMax = t_enemyData.size();
 }
 /// <summary>
@@ -41,20 +45,23 @@ int Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape>
 	int temp = -1;
 	for (int enmies = 0; enmies < bodies.size(); enmies++)
 	{
-		for (int bullies = 0; bullies < t_bullets.size(); bullies++)
+		if (bodies[enmies].getFillColor() == sf::Color::Red)
 		{
-			if (bodies[enmies].getGlobalBounds().intersects(t_bullets.at(bullies).getGlobalBounds()))
+			for (int bullies = 0; bullies < t_bullets.size(); bullies++)
 			{
-				velo[enmies] += sf::Vector2f(t_bulletVelo.at(bullies).x, t_bulletVelo.at(bullies).y);
-				alive[enmies] = false;
-				temp = bullies;
-				if (t_bulletVelo.at(bullies).x < 0 && (bodies[enmies].getRotation() != 90 && bodies[enmies].getRotation() != 270))
+				if (bodies[enmies].getGlobalBounds().intersects(t_bullets.at(bullies).getGlobalBounds()))
 				{
-					toTheRight[enmies] = false;
+					velo[enmies] += sf::Vector2f(t_bulletVelo.at(bullies).x, t_bulletVelo.at(bullies).y);
+					alive[enmies] = false;
+					temp = bullies;
+					if (t_bulletVelo.at(bullies).x < 0 && (bodies[enmies].getRotation() != 90 && bodies[enmies].getRotation() != 270))
+					{
+						toTheRight[enmies] = false;
+					}
 				}
 			}
+			velo[enmies] -= gun[enmies].update(t_player, bodies[enmies], alive[enmies]);
 		}
-		velo[enmies] -= gun[enmies].update(t_player, bodies[enmies], alive[enmies]);
 	}
 	deathAnimation(t_blocks);
 	moveMent(t_player, t_blocks);
@@ -103,7 +110,7 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 {
 	for (int i = 0; i < bodies.size(); i++)
 	{
-		if (alive[i])
+		if (alive[i] && bodies[i].getFillColor() == sf::Color::Red)
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;
@@ -223,7 +230,7 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 {
 	for (int i = 0; i < bodies.size(); i++)
 	{
-		if (!alive[i])
+		if (!alive[i] && bodies[i].getFillColor() == sf::Color::Red)
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;

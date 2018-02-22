@@ -12,6 +12,9 @@ public:
 	static const int SPIDER_HEALTH = 3;
 	static const int BIRD_HEALTH = 5;
 	static const int MAX_ROTATION = 45;
+	static const int KANGAROO_HEALTH = 4;
+	static const int MUTANT_HEALTH = 10;
+	static const int TELEPORT_COOLDOWN = 200;
 
 private:
 	sf::RectangleShape  body;
@@ -22,6 +25,7 @@ private:
 	sf::RectangleShape wing;
 	sf::RectangleShape deadWing;
 	bool rotateUp;
+	int timer;
 
 	void moveMent(std::vector<sf::RectangleShape> t_blocks);
 	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);
@@ -35,4 +39,5 @@ public:
 	int getHealth();
 	sf::RectangleShape getBody();
 	void flying(std::vector<sf::RectangleShape> t_blocks);
+	void teleporting(std::vector<sf::RectangleShape> t_blocks);
 };

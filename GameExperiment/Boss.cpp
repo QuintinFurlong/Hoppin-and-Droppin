@@ -2,6 +2,8 @@
 
 void Boss::moveMent(std::vector<sf::RectangleShape> t_blocks)
 {
+	body.setRotation(0);
+	deadBody.setRotation(0);
 	if (velo.x < -MAX_MOVE * 8 || velo.x > MAX_MOVE * 8)
 	{
 		velo.x *= .9;
@@ -24,6 +26,11 @@ void Boss::moveMent(std::vector<sf::RectangleShape> t_blocks)
 			}
 		}
 	}
+	if (body.getFillColor() == BOSS_KANGAROO_COLOUR && velo.y == 0)
+	{
+		velo.y = -body.getSize().y / 3;
+	}
+	std::cout << body.getPosition().x << " " << body.getPosition().y << std::endl;
 
 	body.move(velo);
 	//wall collision
@@ -43,6 +50,14 @@ void Boss::moveMent(std::vector<sf::RectangleShape> t_blocks)
 					body.setPosition(t_blocks.at(index).getPosition().x - body.getSize().x, body.getPosition().y);
 					velo.x = -MAX_MOVE;
 				}
+			}
+		}
+		else  if (body.getFillColor() == BOSS_KANGAROO_COLOUR && t_blocks.at(index).getFillColor() == ROOF_COLOUR)//roof colision
+		{
+			if (body.getGlobalBounds().intersects(t_blocks.at(index).getGlobalBounds()))
+			{
+				body.setPosition(body.getPosition().x, t_blocks.at(index).getPosition().y + t_blocks.at(index).getSize().y);
+				velo.y = 0.1;//zero allow jumping when touching roof
 			}
 		}
 	}
@@ -82,7 +97,19 @@ void Boss::create(BossData t_bossData)
 		deadBody.setFillColor(sf::Color(body.getFillColor().r / 2, body.getFillColor().g / 2, body.getFillColor().b / 2));
 		deadWing.setFillColor(deadBody.getFillColor());
 		health = BIRD_HEALTH;
-	}	
+	}
+	else if (t_bossData.m_type == "kangaroo")
+	{
+		body.setFillColor(BOSS_KANGAROO_COLOUR);
+		deadBody.setFillColor(sf::Color(body.getFillColor().r / 2, body.getFillColor().g / 2, body.getFillColor().b / 2));
+		health = KANGAROO_HEALTH;
+	}
+	else if (t_bossData.m_type == "mutant")
+	{
+		body.setFillColor(BOSS_MUTANT_COLOUR);
+		deadBody.setFillColor(sf::Color::Blue);
+		health = MUTANT_HEALTH;
+	}
 }
 
 int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::RectangleShape> t_bullets)
@@ -127,6 +154,14 @@ int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::Recta
 			deadWing.setSize(deadBody.getSize());
 			deadWing.setPosition(body.getPosition());
 			wing.setPosition(body.getPosition());
+		}
+		else if (body.getFillColor() == BOSS_KANGAROO_COLOUR)
+		{
+			deadBody.setSize(sf::Vector2f(body.getSize().x, (body.getSize().y / KANGAROO_HEALTH) * (KANGAROO_HEALTH - health)));
+		}
+		else if (body.getFillColor() == BOSS_MUTANT_COLOUR)
+		{
+			deadBody.setSize(sf::Vector2f(body.getSize().x, (body.getSize().y / MUTANT_HEALTH) * (MUTANT_HEALTH - health)));
 		}
 	}
 	return temp;
@@ -231,5 +266,13 @@ void Boss::flying(std::vector<sf::RectangleShape> t_blocks)
 			}
 		}
 	}
-	std::cout << body.getPosition().x << " " << body.getPosition().y << std::endl;
+}
+
+void Boss::teleporting(std::vector<sf::RectangleShape> t_blocks)
+{
+	timer++;
+	if (timer >= TELEPORT_COOLDOWN)
+	{
+		timer = 0;
+	}
 }

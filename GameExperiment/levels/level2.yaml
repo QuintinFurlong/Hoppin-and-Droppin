@@ -1,111 +1,95 @@
 world: 
    - type: floor
-     position: {x: 0, y: -500}
-     size: {width: 1000, height: 500}
+     position: {x: -100, y: 750}
+     size: {width: 2200, height: 500}
    - type: wall #left wall
-     position: {x: 0, y: -9900}
-     size: {width: 100, height: 9400}
+     position: {x: -100, y: -5300}
+     size: {width: 100, height: 6050}
    - type: wall #right wall
-     position: {x: 900, y: -9900}
-     size: {width: 100, height: 9400}
+     position: {x: 2000, y: -5300}
+     size: {width: 100, height: 6050}
    - type: roof
-     position: {x: 0, y: -10000}
-     size: {width: 1000, height: 100}
+     position: {x: -100, y: -5400}
+     size: {width: 2200, height: 100}
    - type: platform
-     position: {x: 100, y: -800}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: 450}
+     size: {width: 300, height: 50}   
    - type: platform
-     position: {x: 100, y: -1100}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: 250}
+     size: {width: 500, height: 50}
    - type: platform
-     position: {x: 100, y: -1400}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -450}
+     size: {width: 300, height: 50}   
    - type: platform
-     position: {x: 100, y: -1700}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -250}
+     size: {width: 500, height: 50}
    - type: platform
-     position: {x: 100, y: -2000}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -950}
+     size: {width: 300, height: 50}   
    - type: platform
-     position: {x: 100, y: -2300}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -750}
+     size: {width: 400, height: 50}
    - type: platform
-     position: {x: 100, y: -2600}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -1450}
+     size: {width: 200, height: 50}   
    - type: platform
-     position: {x: 100, y: -2900}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -1250}
+     size: {width: 400, height: 40}
    - type: platform
-     position: {x: 100, y: -3200}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -1950}
+     size: {width: 200, height: 40}
    - type: platform
-     position: {x: 100, y: -3500}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -1750}
+     size: {width: 300, height: 40}
    - type: platform
-     position: {x: 100, y: -3800}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -2450}
+     size: {width: 100, height: 40}
    - type: platform
-     position: {x: 100, y: -4100}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -2250}
+     size: {width: 200, height: 40}
    - type: platform
-     position: {x: 100, y: -4400}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -2950}
+     size: {width: 100, height: 40}
    - type: platform
-     position: {x: 100, y: -4700}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -2750}
+     size: {width: 100, height: 40}
    - type: platform
-     position: {x: 100, y: -5000}
-     size: {width: 800, height: 50}
+     position: {x: 500, y: -3450}
+     size: {width: 50, height: 40}
    - type: platform
-     position: {x: 100, y: -5300}
-     size: {width: 800, height: 50}
+     position: {x: 1000, y: -3250}
+     size: {width: 50, height: 40}
    - type: platform
-     position: {x: 100, y: -5600}
-     size: {width: 800, height: 50}
+     position: {x: 0, y: -3800}
+     size: {width: 2000, height: 40}
    - type: platform
-     position: {x: 100, y: -5900}
-     size: {width: 800, height: 50}
+     position: {x: 0, y: -4100}
+     size: {width: 200, height: 10}
    - type: platform
-     position: {x: 100, y: -6200}
-     size: {width: 800, height: 50}
+     position: {x: 0, y: -4400}
+     size: {width: 200, height: 10}
    - type: platform
-     position: {x: 100, y: -6500}
-     size: {width: 800, height: 50}
+     position: {x: 0, y: -4700}
+     size: {width: 200, height: 10}
    - type: platform
-     position: {x: 100, y: -6800}
-     size: {width: 800, height: 50}
+     position: {x: 1800, y: -4100}
+     size: {width: 200, height: 10}
    - type: platform
-     position: {x: 100, y: -7100}
-     size: {width: 800, height: 50}
+     position: {x: 1800, y: -4400}
+     size: {width: 200, height: 10}
    - type: platform
-     position: {x: 100, y: -7400}
-     size: {width: 800, height: 50}
-   - type: platform
-     position: {x: 100, y: -7700}
-     size: {width: 800, height: 50}
-   - type: platform
-     position: {x: 100, y: -8000}
-     size: {width: 800, height: 50}
-   - type: platform
-     position: {x: 100, y: -8300}
-     size: {width: 800, height: 50}
-   - type: platform
-     position: {x: 100, y: -9600}
-     size: {width: 800, height: 50}
+     position: {x: 1800, y: -4700}
+     size: {width: 200, height: 10}
 enemies:
-   - position: {x: 500, y: -2000}
-   - position: {x: 500, y: -2500}
-   - position: {x: 500, y: -3000}
-   - position: {x: 500, y: -3500}
-   - position: {x: 500, y: -4000}
-   - position: {x: 500, y: -4500}
-   - position: {x: 500, y: -5500}
-   - position: {x: 500, y: -6500}
-   - position: {x: 500, y: -7500}
-   - position: {x: 500, y: -8500}
+   - position: {x: 500, y: 0}
+   - position: {x: 1000, y: 0}
+   - position: {x: 500, y: -1000}
+   - position: {x: 1000, y: -2000}
+   - position: {x: 1000, y: -3000}
+   - position: {x: 1000, y: -3700}
 player:
-     position: {x: 150, y: -900}
+     position: {x: 150, y: 300}
 boss: #health is stored in type
-     type: spider #meaning small and fast but low health
-     position: {x: 100, y: -9900}
-     size: {width: 30, height: 30}
+     type: wall #meaning high health but nothing else
+     position: {x: 1000, y: -4800}
+     size: {width: 400, height: 1000}
