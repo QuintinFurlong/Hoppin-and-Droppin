@@ -2,13 +2,14 @@
 #pragma once
 #include"SFML\Graphics.hpp"
 #include<iostream>
+#include"Gamestate.h"
 
 class MainMenu
 {
 public:
 	MainMenu();//constructor
 
-	void update(sf::Time &t_time); //update everything
+	void update(sf::Time &t_time, GameState &gamestate); //update everything
 	void render(sf::RenderWindow & t_window); //draw everything
 
 	sf::Font m_font;//used to store font for game title

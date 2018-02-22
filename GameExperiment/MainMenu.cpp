@@ -17,9 +17,9 @@ MainMenu::MainMenu()
 
 	//set string
 	m_title.setString("Hoppin & Droppin");
-	m_backStory.setString("Backstory");
+	m_backStory.setString("Boss Guide");
 	m_controls.setString("Controls");
-	m_controlScheme.setString("Press 'a' to jump /n Use left analogstick to move /n use right analogstick to aim /n Press 'RT' to shoot");
+	m_controlScheme.setString("Press 'a' to jump \n Use left analogstick to move \n use right analogstick to aim \n Press 'RT' to shoot");
 	m_backStoryDisplay.setString("This game is about a guy shooting things up");
 	m_levelSelect.setString("Level Select");
 
@@ -58,23 +58,39 @@ MainMenu::MainMenu()
 
 }
 
-void MainMenu::update(sf::Time &t_time)
+void MainMenu::update(sf::Time &t_time, GameState &gamestate)
 {
-	if (sf::Joystick::isButtonPressed(0, 0))
+	if (sf::Joystick::isButtonPressed(0, 0))//if a is pressed
 	{
-		//set to game
+		if (count == 0)
+		{
+			gamestate = GameState::Levels; //goes to level select
+		}
+		else if (count == 1)
+		{
+			displayLore = true; //displays controls
+		}
+		else if (count == 2)
+		{
+			displayControls = true; //displays lore
+		}
+	}
+	if (displayControls)
+	{
+		if (sf::Joystick::isButtonPressed(0, 1))
+		{
+			displayControls = false; //returns to main menu
+		}
+	}
+	if (displayLore)
+	{
+		if (sf::Joystick::isButtonPressed(0, 1))
+		{
+			displayLore = false; //returns to main menu
+		}
 	}
 
-	if (sf::Joystick::isButtonPressed(0, 1))
-	{
-		displayControls = true;
-	}
-
-	if (sf::Joystick::isButtonPressed(0, 3))
-	{
-		displayLore = true;
-	}
-	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) > 20)
+	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) > 20) //if stick is moved down
 	{
 		if (stickMoved)
 		{
@@ -83,7 +99,7 @@ void MainMenu::update(sf::Time &t_time)
 			stickMoved = false;
 		}
 	}
-	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < -20)
+	else if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) < -20) //if stick is moved up
 	{
 		if (stickMoved)
 		{
@@ -114,7 +130,7 @@ void MainMenu::update(sf::Time &t_time)
 
 void MainMenu::render(sf::RenderWindow & t_window)
 {
-	if (!displayControls && !displayLore)//if neither y nor x has been pressed
+	if (!displayControls && !displayLore)
 	{
 		for (int i = 0; i < 3; i++)
 		{

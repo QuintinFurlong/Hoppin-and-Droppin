@@ -1,12 +1,13 @@
 #pragma once
 #include"SFML\Graphics.hpp"
 #include<iostream>
+#include"Gamestate.h"
 
 class Level
 {
 public:
 	Level();
-	void update(sf::Time t_time);
+	void update(sf::Time t_time, GameState &gamestate);
 	void render(sf::RenderWindow & t_window);
 
 private:

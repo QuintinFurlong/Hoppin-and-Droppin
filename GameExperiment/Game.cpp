@@ -67,11 +67,11 @@ void Game::update(sf::Time t_time)
 {
 	if (m_gamestate == GameState::MainMenu)
 	{
-		m_mainMenu.update(t_time);
+		m_mainMenu.update(t_time, m_gamestate);
 	}
 	else if (m_gamestate == GameState::Levels)
 	{
-		m_level.update(t_time);
+		m_level.update(t_time, m_gamestate);
 	}
 	if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
 	{
