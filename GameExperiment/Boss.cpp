@@ -128,13 +128,17 @@ int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::Recta
 			temp = bullies;
 		}
 	}
-	if (body.getFillColor() != BOSS_BIRD_COLOUR)
+	if (body.getFillColor() == BOSS_BIRD_COLOUR)
 	{
-		moveMent(t_blocks);
+		flying(t_blocks);
+	}
+	else if (body.getFillColor() == BOSS_MUTANT_COLOUR)
+	{
+		teleporting(t_blocks);
 	}
 	else
 	{
-		flying(t_blocks);
+		moveMent(t_blocks);
 	}
 
 	deadBody.setPosition(body.getPosition());
@@ -273,6 +277,36 @@ void Boss::teleporting(std::vector<sf::RectangleShape> t_blocks)
 	timer++;
 	if (timer >= TELEPORT_COOLDOWN)
 	{
-		timer = 0;
+		timer = 0;		
+		if (midTeleport)
+		{
+			body.setPosition(-2000, -1000);
+			midTeleport = false;
+		}
+		else
+		{
+			switch (rand() % 5)
+			{
+			case 0:
+				body.setPosition(t_blocks.at(t_blocks.size() - 1).getPosition());
+				break;
+			case 1:
+				body.setPosition(t_blocks.at(t_blocks.size() - 2).getPosition());
+				break;
+			case 2:
+				body.setPosition(t_blocks.at(t_blocks.size() - 3).getPosition());
+				break;
+			case 3:
+				body.setPosition(t_blocks.at(t_blocks.size() - 4).getPosition());
+				break;
+			case 4:
+				body.setPosition(t_blocks.at(t_blocks.size() - 5).getPosition());
+				break;
+			default:
+				break;
+			}
+			body.move(0, -body.getSize().y);
+			midTeleport = true;
+		}
 	}
 }

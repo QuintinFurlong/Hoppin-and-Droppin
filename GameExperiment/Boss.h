@@ -26,6 +26,7 @@ private:
 	sf::RectangleShape deadWing;
 	bool rotateUp;
 	int timer;
+	bool midTeleport;
 
 	void moveMent(std::vector<sf::RectangleShape> t_blocks);
 	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);
