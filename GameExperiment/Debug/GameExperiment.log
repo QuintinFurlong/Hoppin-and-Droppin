@@ -1,18 +1,3 @@
-﻿  Boss.cpp
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(9): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(15): warning C4305: '+=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(17): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(37): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(60): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(118): warning C4018: '<': signed/unsigned mismatch
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(188): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(207): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(215): warning C4305: '*=': truncation from 'double' to 'float'
-c:\users\c00218453\source\repos\quintin-martin-best-game\gameexperiment\boss.cpp(244): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-  Compiling...
-  Main.cpp
-  Game.cpp
-  Generating Code...
-  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.exe
-  GameExperiment.vcxproj -> C:\Users\c00218453\Source\Repos\Quintin-Martin-Best-Game\Debug\GameExperiment.pdb (Partial PDB)
+﻿  Game.cpp
+  GameExperiment.vcxproj -> C:\Users\c00157047\Source\Repos\Hoppin-and-Droppin2\Debug\GameExperiment.exe
+  GameExperiment.vcxproj -> C:\Users\c00157047\Source\Repos\Hoppin-and-Droppin2\Debug\GameExperiment.pdb (Partial PDB)

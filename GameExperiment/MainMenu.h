@@ -8,7 +8,7 @@ class MainMenu
 public:
 	MainMenu();//constructor
 
-	void update(); //update everything
+	void update(sf::Time &t_time); //update everything
 	void render(sf::RenderWindow & t_window); //draw everything
 
 	sf::Font m_font;//used to store font for game title
@@ -25,4 +25,6 @@ public:
 
 
 	sf::RectangleShape m_buttons[3];//buttons for the menu
+	int count = 0;
+	bool stickMoved = false;
 };

@@ -6,7 +6,7 @@ class Level
 {
 public:
 	Level();
-	void update();
+	void update(sf::Time t_time);
 	void render(sf::RenderWindow & t_window);
 
 private:
@@ -14,5 +14,7 @@ private:
 	sf::Font m_font; //font used for text obj
 	sf::Text m_header; //text used for title
 	sf::Text m_text[5]; //texts used for buttons
+	int count;
+	bool stickMoved;
 };
 

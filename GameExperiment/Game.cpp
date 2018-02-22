@@ -64,6 +64,14 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_time)
 {
+	if (m_gamestate == GameState::MainMenu)
+	{
+		m_mainMenu.update(t_time);
+	}
+	else if (m_gamestate == GameState::Levels)
+	{
+		m_level.update(t_time);
+	}
 	if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
 	{
 		m_player.update(m_wallSprites);
@@ -162,6 +170,10 @@ void Game::render()
 	if (m_gamestate == GameState::MainMenu)//if main menu mode
 	{
 		m_mainMenu.render(m_window);//draw main menu
+	}
+	else if (m_gamestate == GameState::Levels)
+	{
+		m_level.render(m_window);
 	}
 
 	if (m_gamestate == GameState::GamePlay)//if gameplay mode draw game
