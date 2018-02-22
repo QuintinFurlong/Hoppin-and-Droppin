@@ -106,6 +106,6 @@ enemies:
 player:
      position: {x: 150, y: -900}
 boss: #health is stored in type
-     type: spider #meaning high health but nothing else
+     type: spider #meaning small and fast but low health
      position: {x: 100, y: -9900}
      size: {width: 30, height: 30}

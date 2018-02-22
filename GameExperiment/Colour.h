@@ -9,3 +9,5 @@ static const sf::Color ROOF_COLOUR = sf::Color(137, 45, 50);
 static const sf::Color BOSS_WALL_COLOUR = sf::Color(105, 105, 105);
 static const sf::Color BOSS_SPIDER_INSIDE_COLOUR = sf::Color::Black;
 static const sf::Color BOSS_SPIDER_OUTSIDE_COLOUR = sf::Color::Red;
+static const sf::Color BOSS_BIRD_COLOUR = sf::Color(255, 20, 147);
+static const sf::Color BOSS_KANGAROO_COLOUR = sf::Color(210, 105, 30);

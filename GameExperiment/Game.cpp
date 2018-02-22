@@ -4,7 +4,8 @@
 Game::Game()
 	: m_window{ sf::VideoMode{ 1400, 800 }, "Experiment" }
 {
-	if (!LevelLoader::load(2, currentLevel))
+	levelNumber = 4;
+	if (!LevelLoader::load(levelNumber, currentLevel))
 	{
 		return;
 	}
@@ -118,11 +119,15 @@ void Game::update(sf::Time t_time)
 			}
 		}
 		//player is dead
-		if (m_player.getHealth() == 0)
+		if (m_player.getHealth() == 0 || m_boss.getHealth() == 0)
 		{
+			if (m_boss.getHealth() == 0 && levelNumber < 5)
+			{
+				levelNumber++;
+			}
 			currentLevel.m_enemies.clear();
 			currentLevel.m_worldPieces.clear();
-			if (!LevelLoader::load(2, currentLevel))
+			if (!LevelLoader::load(levelNumber, currentLevel))
 			{
 				return;
 			}

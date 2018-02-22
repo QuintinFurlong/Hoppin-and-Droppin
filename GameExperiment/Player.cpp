@@ -211,10 +211,10 @@ void Player::reset(sf::Vector2f t_pos)
 
 void Player::bossTouch(sf::RectangleShape t_boss)
 {
-	if(m_body.getGlobalBounds().intersects(t_boss.getGlobalBounds()))
+	if (m_body.getGlobalBounds().intersects(t_boss.getGlobalBounds()))
 	{
 		health--;
-		if(m_body.getPosition().x + m_body.getSize().x/2 > t_boss.getPosition().x + t_boss.getSize().x / 2)
+		if (m_body.getPosition().x + m_body.getSize().x / 2 > t_boss.getPosition().x + t_boss.getSize().x / 2)
 		{
 			m_velo.x = 30;
 		}

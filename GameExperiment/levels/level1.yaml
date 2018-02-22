@@ -88,7 +88,7 @@ enemies:
    - position: {x: 1000, y: -3000}
    - position: {x: 1000, y: -3700}
 player:
-     position: {x: 650, y: -5100}
+     position: {x: 150, y: 300}
 boss: #health is stored in type
      type: wall #meaning high health but nothing else
      position: {x: 1000, y: -4800}
