@@ -11,7 +11,7 @@ Game::Game()
 		return;
 	}
 	m_player.setPosition(currentLevel.m_player.m_position);
-
+	m_player.kill();
 	m_enemies.create(currentLevel.m_enemies);
 	m_boss.create(currentLevel.m_boss);
 
@@ -71,9 +71,9 @@ void Game::update(sf::Time t_time)
 	}
 	else if (m_gamestate == GameState::Levels)
 	{
-		m_level.update(t_time, m_gamestate);
+		m_level.update(t_time, m_gamestate, levelNumber);
 	}
-	if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
+	else if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
 	{
 		m_player.update(m_wallSprites);
 		m_player.hit(m_enemies.update(m_player.getBody(), m_wallSprites, m_player.getBullets(), m_player.getBulletVelo()));

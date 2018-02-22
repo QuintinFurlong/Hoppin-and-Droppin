@@ -33,7 +33,7 @@ Level::Level()
 	m_header.setFillColor(sf::Color::Red);
 }
 
-void Level::update(sf::Time t_time, GameState &gamestate)
+void Level::update(sf::Time t_time, GameState &gamestate, int &level)
 {
 	if (sf::Joystick::getAxisPosition(0, sf::Joystick::Axis::Y) > 20)
 	{
@@ -75,6 +75,11 @@ void Level::update(sf::Time t_time, GameState &gamestate)
 	if (sf::Joystick::isButtonPressed(0, 1))
 	{
 		gamestate = GameState::MainMenu;
+	}
+	if (sf::Joystick::isButtonPressed(0, 0))
+	{
+		level = count +1;
+		gamestate = GameState::GamePlay;
 	}
 }
 

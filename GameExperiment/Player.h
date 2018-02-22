@@ -36,4 +36,5 @@ public:
 	int getHealth();
 	void reset(sf::Vector2f t_pos);
 	void bossTouch(sf::RectangleShape t_boss);
+	void kill();
 };

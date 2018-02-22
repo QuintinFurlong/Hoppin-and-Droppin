@@ -7,7 +7,7 @@ class Level
 {
 public:
 	Level();
-	void update(sf::Time t_time, GameState &gamestate);
+	void update(sf::Time t_time, GameState &gamestate, int &level);
 	void render(sf::RenderWindow & t_window);
 
 private:

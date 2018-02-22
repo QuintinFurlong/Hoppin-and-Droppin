@@ -228,3 +228,8 @@ void Player::bossTouch(sf::RectangleShape t_boss)
 		}
 	}
 }
+
+void Player::kill()
+{
+	health = 0;
+}
