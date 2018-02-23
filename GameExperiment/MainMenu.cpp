@@ -1,4 +1,5 @@
-#include"MainMenu.h"
+#include "MainMenu.h"
+#include "Colour.h"
 
 MainMenu::MainMenu()
 {
@@ -19,8 +20,8 @@ MainMenu::MainMenu()
 	m_title.setString("Hoppin & Droppin");
 	m_backStory.setString("Boss Guide");
 	m_controls.setString("Controls");
-	m_controlScheme.setString("Press 'a' to jump \n Use left analogstick to move \n use right analogstick to aim \n Press 'RT' to shoot");
-	m_backStoryDisplay.setString("This game is about a guy shooting things up");
+	m_controlScheme.setString("Press 'a' to jump \n Use left analogstick to move \n Use right analogstick to aim \n Press 'RT' to shoot\n Press 'back' to return to menu from game");
+	m_backStoryDisplay.setString("This game has 5 un");
 	m_levelSelect.setString("Level Select");
 
 	//setPosition
@@ -40,20 +41,20 @@ MainMenu::MainMenu()
 	m_levelSelect.setCharacterSize(24);
 
 	//set colour
-	m_title.setFillColor(sf::Color::Red);
-	m_backStory.setFillColor(sf::Color::Blue);
-	m_controls.setFillColor(sf::Color::Blue);
-	m_controlScheme.setFillColor(sf::Color::Blue);
-	m_backStoryDisplay.setFillColor(sf::Color::Blue);
-	m_levelSelect.setFillColor(sf::Color::Blue);
+	m_title.setFillColor(MENU_TITLE);
+	m_backStory.setFillColor(MENU_TEXT);
+	m_controls.setFillColor(MENU_TEXT);
+	m_controlScheme.setFillColor(MENU_TEXT);
+	m_backStoryDisplay.setFillColor(MENU_TEXT);
+	m_levelSelect.setFillColor(MENU_TEXT);
 
 	for (int i = 0; i < 3; i++)
 	{
 		m_buttons[i].setPosition(sf::Vector2f(400, i * 100 + 200));
 		m_buttons[i].setSize(sf::Vector2f(600, 60));
-		m_buttons[i].setFillColor(sf::Color::White);
-		m_buttons[i].setOutlineColor(sf::Color::Blue);
-		m_buttons[i].setOutlineThickness(5);
+		m_buttons[i].setFillColor(MENU_BUTTON_FILL);
+		m_buttons[i].setOutlineColor(MENU_OUTLINE_OFF);
+		m_buttons[i].setOutlineThickness(15);
 	}
 
 }
@@ -94,7 +95,7 @@ void MainMenu::update(sf::Time &t_time, GameState &gamestate)
 	{
 		if (stickMoved)
 		{
-			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			m_buttons[count].setOutlineColor(MENU_OUTLINE);
 			count++;
 			stickMoved = false;
 		}
@@ -103,7 +104,7 @@ void MainMenu::update(sf::Time &t_time, GameState &gamestate)
 	{
 		if (stickMoved)
 		{
-			m_buttons[count].setOutlineColor(sf::Color::Blue);
+			m_buttons[count].setOutlineColor(MENU_OUTLINE);
 			count--;
 			stickMoved = false;
 		}
@@ -123,8 +124,8 @@ void MainMenu::update(sf::Time &t_time, GameState &gamestate)
 	}
 	for (int i = 0; i < 3; i++)
 	{
-		m_buttons[i].setOutlineColor(sf::Color::Blue);
-		m_buttons[count].setOutlineColor(sf::Color::Red);
+		m_buttons[i].setOutlineColor(MENU_OUTLINE_OFF);
+		m_buttons[count].setOutlineColor(MENU_OUTLINE_ON);
 	}
 }
 

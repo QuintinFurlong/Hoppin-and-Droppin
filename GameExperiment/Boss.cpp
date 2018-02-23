@@ -30,7 +30,6 @@ void Boss::moveMent(std::vector<sf::RectangleShape> t_blocks)
 	{
 		velo.y = -body.getSize().y / 3;
 	}
-	std::cout << body.getPosition().x << " " << body.getPosition().y << std::endl;
 
 	body.move(velo);
 	//wall collision
@@ -107,7 +106,7 @@ void Boss::create(BossData t_bossData)
 	else if (t_bossData.m_type == "mutant")
 	{
 		body.setFillColor(BOSS_MUTANT_COLOUR);
-		deadBody.setFillColor(sf::Color::Blue);
+		deadBody.setFillColor(PLAYER_COLOUR);
 		health = MUTANT_HEALTH;
 	}
 }

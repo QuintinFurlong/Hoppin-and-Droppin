@@ -17,5 +17,6 @@ private:
 	sf::Text m_text[5]; //texts used for buttons
 	int count;
 	bool stickMoved;
+	bool pressReset;
 };
 

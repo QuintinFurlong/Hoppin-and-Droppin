@@ -5,8 +5,8 @@ Player::Player()
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
 		sf::RectangleShape tempBullet;
-		tempBullet.setSize(sf::Vector2f(20, 20));
-		tempBullet.setFillColor(sf::Color(192, 192, 192));
+		tempBullet.setSize(sf::Vector2f(50, 50));
+		tempBullet.setFillColor(PLAYER_BULLET_COLOUR);
 		sf::Vector2f tempVelo;
 		tempVelo = sf::Vector2f(0, 0);
 		bullet.push_back(tempBullet);
@@ -14,11 +14,11 @@ Player::Player()
 	}
 	currentBullet = 0;
 
-	m_body.setFillColor(sf::Color::Blue);
+	m_body.setFillColor(PLAYER_COLOUR);
 	m_body.setSize(sf::Vector2f(100, 150));
 	m_body.setPosition(300, 100);
 
-	m_healthBar.setFillColor(sf::Color::Magenta);
+	m_healthBar.setFillColor(PLAYER_HEALTH_COLOUR);
 	m_healthBar.setSize(sf::Vector2f(100, 0));
 	m_healthBar.setPosition(300, 100);
 

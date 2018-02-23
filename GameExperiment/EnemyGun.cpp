@@ -5,8 +5,8 @@ EnemyGun::EnemyGun()//hi
 	for (int index = 0; index < CLIP_SIZE; index++)
 	{
 		sf::RectangleShape tempBullet;
-		tempBullet.setSize(sf::Vector2f(20, 20));
-		tempBullet.setFillColor(sf::Color(192, 192, 192));
+		tempBullet.setSize(sf::Vector2f(40, 40));
+		tempBullet.setFillColor(ENEMY_BULLET_COLOUR);
 		tempBullet.setPosition(-100,-100);
 		sf::Vector2f tempVelo;
 		tempVelo = sf::Vector2f(0, 0);

@@ -1,4 +1,5 @@
-#include"Level.h"
+#include "Level.h"
+#include "Colour.h"
 
 Level::Level()
 {
@@ -11,13 +12,13 @@ Level::Level()
 		m_text[i].setFont(m_font);
 		m_text[i].setCharacterSize(24);
 		m_text[i].setPosition(675, i * 100 + 200);
-		m_text[i].setFillColor(sf::Color::Blue);
+		m_text[i].setFillColor(MENU_TEXT);
 
 		m_buttons[i].setPosition(sf::Vector2f(400, i * 100 + 200));
 		m_buttons[i].setSize(sf::Vector2f(600, 60));
-		m_buttons[i].setFillColor(sf::Color::White);
-		m_buttons[i].setOutlineColor(sf::Color::Blue);
-		m_buttons[i].setOutlineThickness(5);
+		m_buttons[i].setFillColor(MENU_BUTTON_FILL);
+		m_buttons[i].setOutlineColor(MENU_OUTLINE_OFF);
+		m_buttons[i].setOutlineThickness(15);
 	}
 
 	m_text[0].setString("Level 1");
@@ -30,7 +31,9 @@ Level::Level()
 	m_header.setFont(m_font);
 	m_header.setCharacterSize(36);
 	m_header.setPosition(500, 20);
-	m_header.setFillColor(sf::Color::Red);
+	m_header.setFillColor(MENU_TEXT);
+
+	pressReset = false;
 }
 
 void Level::update(sf::Time t_time, GameState &gamestate, int &level)
@@ -68,18 +71,23 @@ void Level::update(sf::Time t_time, GameState &gamestate, int &level)
 	}
 	for (int i = 0; i < 5; i++)
 	{
-		m_buttons[i].setOutlineColor(sf::Color::Blue);
-		m_buttons[count].setOutlineColor(sf::Color::Red);
+		m_buttons[i].setOutlineColor(MENU_OUTLINE_OFF);
+		m_buttons[count].setOutlineColor(MENU_OUTLINE_ON);
 	}
 
 	if (sf::Joystick::isButtonPressed(0, 1))
 	{
 		gamestate = GameState::MainMenu;
 	}
-	if (sf::Joystick::isButtonPressed(0, 0))
+	if (sf::Joystick::isButtonPressed(0, 0) && pressReset)
 	{
 		level = count +1;
 		gamestate = GameState::GamePlay;
+		pressReset = false;
+	}
+	else if (!sf::Joystick::isButtonPressed(0, 0))
+	{
+		pressReset = true;
 	}
 }
 

@@ -60,6 +60,10 @@ void Game::processEvents()
 		{
 			m_window.close();
 		}
+		if (sf::Joystick::isButtonPressed(0, 6) && m_gamestate == GameState::GamePlay)
+		{
+			m_gamestate = GameState::MainMenu;
+		}
 	}
 }
 
@@ -72,6 +76,35 @@ void Game::update(sf::Time t_time)
 	else if (m_gamestate == GameState::Levels)
 	{
 		m_level.update(t_time, m_gamestate, levelNumber);
+		if (m_gamestate == GameState::GamePlay) 
+		{
+			currentLevel.m_enemies.clear();
+			currentLevel.m_worldPieces.clear();
+			if (!LevelLoader::load(levelNumber, currentLevel))
+			{
+				return;
+			}
+			m_player.reset(currentLevel.m_player.m_position);
+
+			m_enemies.create(currentLevel.m_enemies);
+			m_boss.create(currentLevel.m_boss);
+			m_wallSprites.clear();
+			for (WorldData const & obstacle : currentLevel.m_worldPieces)
+			{
+				sf::RectangleShape sprite;
+				sprite.setPosition(obstacle.m_position);
+				sprite.setSize(obstacle.m_size);
+				if (obstacle.m_type == "floor")
+					sprite.setFillColor(FLOOR_COLOUR);
+				else if (obstacle.m_type == "wall")
+					sprite.setFillColor(WALL_COLOUR);
+				else if (obstacle.m_type == "roof")
+					sprite.setFillColor(ROOF_COLOUR);
+				else
+					sprite.setFillColor(PLATFORM_COLOUR);
+				m_wallSprites.push_back(sprite);
+			}
+		}
 	}
 	else if (m_gamestate == GameState::GamePlay)//if game mode do all game stuff
 	{
@@ -170,14 +203,19 @@ void Game::render()
 	m_window.clear(SKY_COLOUR);
 	if (m_gamestate == GameState::MainMenu)//if main menu mode
 	{
+		m_view.setCenter(700,400);
+		m_view.setSize(1400, 800);
+		m_window.setView(m_view);
 		m_mainMenu.render(m_window);//draw main menu
 	}
 	else if (m_gamestate == GameState::Levels)
 	{
+		m_view.setCenter(700, 400);
+		m_view.setSize(1400, 800);
+		m_window.setView(m_view);
 		m_level.render(m_window);
 	}
-
-	if (m_gamestate == GameState::GamePlay)//if gameplay mode draw game
+	else if (m_gamestate == GameState::GamePlay)//if gameplay mode draw game
 	{
 		m_enemies.render(m_window);
 		m_boss.render(m_window);

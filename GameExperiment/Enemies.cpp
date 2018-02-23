@@ -6,12 +6,12 @@ Enemies::Enemies()
 	{
 		sf::RectangleShape tempBody;
 		tempBody.setSize(sf::Vector2f(100, 150));
-		tempBody.setFillColor(sf::Color::Red);
+		tempBody.setFillColor(ENEMY_COLOUR);
 		tempBody.setPosition(-1000,0);
 		alive[i] = false;
 		velo[i] = sf::Vector2f(0, 0);
 		tempBody.setOutlineThickness(1);
-		tempBody.setOutlineColor(sf::Color::White);
+		tempBody.setOutlineColor(ENEMY_OUTLINE_COLOUR);
 		bodies.push_back(tempBody);
 		toTheRight[i] = true;
 	}
@@ -26,7 +26,7 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 	for (unsigned int i = 0; i < t_enemyData.size(); i++)
 	{
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
-		bodies[i].setFillColor(sf::Color::Red);
+		bodies[i].setFillColor(ENEMY_COLOUR);
 		alive[i] = true;
 		bodies[i].setRotation(0);
 	}
@@ -45,7 +45,7 @@ int Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape>
 	int temp = -1;
 	for (int enmies = 0; enmies < bodies.size(); enmies++)
 	{
-		if (bodies[enmies].getFillColor() == sf::Color::Red)
+		if (bodies[enmies].getFillColor() == ENEMY_COLOUR)
 		{
 			for (int bullies = 0; bullies < t_bullets.size(); bullies++)
 			{
@@ -110,7 +110,7 @@ void Enemies::moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleSha
 {
 	for (int i = 0; i < bodies.size(); i++)
 	{
-		if (alive[i] && bodies[i].getFillColor() == sf::Color::Red)
+		if (alive[i] && bodies[i].getFillColor() == ENEMY_COLOUR)
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;
@@ -230,7 +230,7 @@ void Enemies::deathAnimation(std::vector<sf::RectangleShape> t_blocks)
 {
 	for (int i = 0; i < bodies.size(); i++)
 	{
-		if (!alive[i] && bodies[i].getFillColor() == sf::Color::Red)
+		if (!alive[i] && bodies[i].getFillColor() == ENEMY_COLOUR)
 		{
 			velo[i].x *= .9;
 			velo[i].y += .98;
