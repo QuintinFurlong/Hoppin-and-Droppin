@@ -25,7 +25,7 @@ private:
 	Player m_player;
 	sf::View m_view;
 	sf::Vector2f m_offsetView;
-	static const int CAM_SPEED = 8;
+	static const int CAM_SPEED = 20;
 	Enemies m_enemies;
 	Boss m_boss;
 

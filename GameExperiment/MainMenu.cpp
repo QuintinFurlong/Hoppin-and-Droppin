@@ -21,7 +21,12 @@ MainMenu::MainMenu()
 	m_backStory.setString("Boss Guide");
 	m_controls.setString("Controls");
 	m_controlScheme.setString("Press 'a' to jump \n Use left analogstick to move \n Use right analogstick to aim \n Press 'RT' to shoot\n Press 'back' to return to menu from game");
-	m_backStoryDisplay.setString("This game has 5 un");
+	m_backStoryDisplay.setString("This game has 5 unique bosses each in its own level \nSPIDER(LEVEL 1) "
+		"\nAfter making it up the tower, past some enemies you'll get to a platform to high to jump on to"
+		".You'll have \nto use enemy bodies to reach the spider.The spider has low health and runs back and forward on the floor.\n"
+		"WALL(LEVEL 2) \nThe wall boss is at the top and moves back and forward.The wall boss has a lot of health and is too tall \nto jump over.\n"
+		"BIRD(LEVEL 3) \nThe bird flies around the arena ignoring platform blocks \nKangaroo(LEVEL 4)\n"
+		"The kangaroo jumps the height of the arena from the ground and moves back and forward \nMutant(LEVEL 5)\nThe mutant teleports between the top 5 platforms");
 	m_levelSelect.setString("Level Select");
 
 	//setPosition
