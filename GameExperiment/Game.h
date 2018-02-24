@@ -37,6 +37,8 @@ private:
 	Level m_level;
 	MainMenu m_mainMenu;//intance of main menu
 	GameState m_gamestate = GameState::MainMenu; //gamestate, used to change between menus
+	sf::SoundBuffer musicBuffer;
+	sf::Sound music;
 };
 
 #endif // !GAME

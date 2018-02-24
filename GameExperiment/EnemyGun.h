@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Colour.h"
 
 class EnemyGun
@@ -18,4 +19,6 @@ private:
 	std::vector<sf::Vector2f> bulletVelo;
 	int currentBullet;
 	int timer;
+	sf::SoundBuffer gunShotBuffer;
+	sf::Sound gunShot;
 };

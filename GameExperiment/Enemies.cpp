@@ -15,6 +15,11 @@ Enemies::Enemies()
 		bodies.push_back(tempBody);
 		toTheRight[i] = true;
 	}
+	if (!gotShotBuffer.loadFromFile("ASSETS/SOUNDS/quiet_death.wav"))
+	{
+		//err
+	}
+	gotShot.setBuffer(gotShotBuffer);
 }
 
 void Enemies::create(std::vector<EnemyData> t_enemyData)
@@ -22,11 +27,13 @@ void Enemies::create(std::vector<EnemyData> t_enemyData)
 	for (int i = 0; i < MAX_ENEMIES; i++) 
 	{
 		bodies[i].setFillColor(sf::Color::Transparent);
+		bodies[i].setOutlineColor(sf::Color::Transparent);
 	}
 	for (unsigned int i = 0; i < t_enemyData.size(); i++)
 	{
 		bodies[i].setPosition(t_enemyData.at(i).m_position);
 		bodies[i].setFillColor(ENEMY_COLOUR);
+		bodies[i].setOutlineColor(ENEMY_OUTLINE_COLOUR);
 		alive[i] = true;
 		bodies[i].setRotation(0);
 	}
@@ -58,6 +65,7 @@ int Enemies::update(sf::RectangleShape t_player, std::vector<sf::RectangleShape>
 					{
 						toTheRight[enmies] = false;
 					}
+					gotShot.play();
 				}
 			}
 			velo[enmies] -= gun[enmies].update(t_player, bodies[enmies], alive[enmies]);

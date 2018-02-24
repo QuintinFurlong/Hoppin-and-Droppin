@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "Colour.h"
 
 class Player
@@ -19,7 +20,12 @@ private:
 	sf::Vector2f m_velo;
 	int health;
 	sf::RectangleShape m_healthBar;
-	
+	sf::SoundBuffer gunShotBuffer;
+	sf::Sound gunShot;
+	sf::SoundBuffer gotShotBuffer;
+	sf::Sound gotShot;
+	sf::SoundBuffer gotHitBuffer;
+	sf::Sound gotHit;
 
 public:
 	Player();

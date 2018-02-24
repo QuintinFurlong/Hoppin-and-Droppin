@@ -1,6 +1,7 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include "LevelLoader.h"
 #include "Colour.h"
 
@@ -27,9 +28,10 @@ private:
 	bool rotateUp;
 	int timer;
 	bool midTeleport;
+	sf::SoundBuffer gotShotBuffer;
+	sf::Sound gotShot;
 
 	void moveMent(std::vector<sf::RectangleShape> t_blocks);
-	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);
 
 public:
 	Boss();

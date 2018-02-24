@@ -25,6 +25,22 @@ Player::Player()
 	m_velo = sf::Vector2f(0, 0);
 	timer = 0;
 	health = MAX_HEALTH;
+
+	if (!gunShotBuffer.loadFromFile("ASSETS/SOUNDS/gunshot.wav"))
+	{
+		//err
+	}
+	gunShot.setBuffer(gunShotBuffer);
+	if (!gotShotBuffer.loadFromFile("ASSETS/SOUNDS/Getting-Shot.wav"))
+	{
+		//err
+	}
+	gotShot.setBuffer(gotShotBuffer);
+	if (!gotHitBuffer.loadFromFile("ASSETS/SOUNDS/Getting Hit.wav"))
+	{
+		//err
+	}
+	gotHit.setBuffer(gotHitBuffer);
 }
 
 void Player::update(std::vector<sf::RectangleShape> t_blocks)
@@ -78,6 +94,7 @@ void Player::update(std::vector<sf::RectangleShape> t_blocks)
 			}
 			bulletVelo[currentBullet] = sf::Vector2f(0, 0);
 			timer = FIRE_RATE;
+			gunShot.play();
 		}
 	}
 	else
@@ -193,6 +210,7 @@ void Player::takeDamage(bool t_hit)
 	if (t_hit)
 	{
 		health--;
+		gotShot.play();
 	}
 }
 
@@ -226,6 +244,7 @@ void Player::bossTouch(sf::RectangleShape t_boss)
 		{
 			m_velo.y = -30;
 		}
+		gotHit.play();
 	}
 }
 

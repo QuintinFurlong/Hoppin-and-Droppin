@@ -66,6 +66,11 @@ Boss::Boss()
 {
 	health = 1;
 	velo.x = -MAX_MOVE;
+	if (!gotShotBuffer.loadFromFile("ASSETS/SOUNDS/Bullet-Impact.wav"))
+	{
+		//err
+	}
+	gotShot.setBuffer(gotShotBuffer);
 }
 
 void Boss::create(BossData t_bossData)
@@ -120,6 +125,7 @@ int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::Recta
 		{
 			health--;
 			temp = bullies;
+			gotShot.play();
 		}
 		if (body.getFillColor() == BOSS_BIRD_COLOUR && wing.getGlobalBounds().intersects(t_bullets.at(bullies).getGlobalBounds()))
 		{
@@ -273,6 +279,8 @@ void Boss::flying(std::vector<sf::RectangleShape> t_blocks)
 
 void Boss::teleporting(std::vector<sf::RectangleShape> t_blocks)
 {
+	body.setRotation(0);
+	deadBody.setRotation(0);
 	timer++;
 	if (timer >= TELEPORT_COOLDOWN)
 	{

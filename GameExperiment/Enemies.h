@@ -18,6 +18,8 @@ private:
 	sf::Vector2f velo[MAX_ENEMIES];
 	EnemyGun gun[MAX_ENEMIES];
 	int realMax = MAX_ENEMIES;
+	sf::SoundBuffer gotShotBuffer;
+	sf::Sound gotShot;
 
 	void moveMent(sf::RectangleShape t_player, std::vector<sf::RectangleShape> t_blocks);
 	void deathAnimation(std::vector<sf::RectangleShape> t_blocks);

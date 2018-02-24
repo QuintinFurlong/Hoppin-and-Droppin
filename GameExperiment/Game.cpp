@@ -31,6 +31,14 @@ Game::Game()
 		m_wallSprites.push_back(sprite);
 	}
 	m_offsetView = sf::Vector2f(0, 0);
+	if (!musicBuffer.loadFromFile("ASSETS/SOUNDS/music.wav"))
+	{
+		//err
+	}
+	music.setBuffer(musicBuffer);
+	music.setLoop(true);
+	music.setVolume(10);
+	music.play();
 }
 
 void Game::run()

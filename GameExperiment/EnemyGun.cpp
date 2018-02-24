@@ -14,6 +14,11 @@ EnemyGun::EnemyGun()//hi
 		bulletVelo.push_back(tempVelo);
 	}
 	timer = 0;
+	if (!gunShotBuffer.loadFromFile("ASSETS/SOUNDS/gunshot.wav"))
+	{
+		//err
+	}
+	gunShot.setBuffer(gunShotBuffer);
 }
 
 sf::Vector2f EnemyGun::update(sf::RectangleShape t_playerPos, sf::RectangleShape t_enemy, bool t_enemyAlive)
@@ -36,6 +41,7 @@ sf::Vector2f EnemyGun::update(sf::RectangleShape t_playerPos, sf::RectangleShape
 			}
 			bulletVelo[currentBullet] = sf::Vector2f(0, 0);
 			timer = FIRE_RATE;
+			gunShot.play();
 		}
 		else
 		{
