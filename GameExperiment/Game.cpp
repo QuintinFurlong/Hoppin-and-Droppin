@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game()
-	: m_window{ sf::VideoMode{ 1400, 800 }, "Experiment" }
+	: m_window{ sf::VideoMode(), "HOPPIN AND DROPPIN" , sf::Style::Fullscreen }
 {
 	srand(time(NULL));
 	levelNumber = 5;
@@ -64,7 +64,7 @@ void Game::processEvents()
 	sf::Event event;
 	while (m_window.pollEvent(event))
 	{
-		if (event.type == sf::Event::Closed)
+		if (event.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
 		{
 			m_window.close();
 		}
