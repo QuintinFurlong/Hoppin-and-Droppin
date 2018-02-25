@@ -1,0 +1,60 @@
+world: 
+   - type: floor
+     position: {x: 0, y: -500}
+     size: {width: 1600, height: 400}
+   - type: wall #left wall
+     position: {x: 0, y: -4900}
+     size: {width: 100, height: 4400}
+   - type: wall #right wall
+     position: {x: 1500, y: -4900}
+     size: {width: 100, height: 4400}
+   - type: roof
+     position: {x: 0, y: -5000}
+     size: {width: 1600, height: 100}
+   - type: platform
+     position: {x: 780, y: -1000}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -1500}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -2000}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -2500}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -3000}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -3500}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 780, y: -4000}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 350, y: -4500}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 640, y: -4500}
+     size: {width: 40, height: 10}
+   - type: platform
+     position: {x: 930, y: -4500}
+     size: {width: 40, height: 10} 
+   - type: platform
+     position: {x: 1220, y: -4500}
+     size: {width: 40, height: 10} 
+enemies:
+   - position: {x: 780, y: -1000}
+   - position: {x: 780, y: -1500}
+   - position: {x: 780, y: -2000}
+   - position: {x: 780, y: -2500}
+   - position: {x: 780, y: -3000}
+   - position: {x: 780, y: -3500}
+   - position: {x: 780, y: -4000}
+player:
+     position: {x: 800, y: -700}
+boss: #health is stored in type
+     type: mutant #meaning can teleport
+     position: {x: -1000, y: -4800}
+     size: {width: 100, height: 150}

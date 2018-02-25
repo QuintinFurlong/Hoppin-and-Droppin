@@ -1,4 +1,0 @@
-﻿  Game.cpp
-c:\users\bluem\onedrive\documents\github\hoppin-and-droppin\gameexperiment\game.cpp(7): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  GameExperiment.vcxproj -> C:\Users\Bluem\OneDrive\Documents\GitHub\Hoppin-and-Droppin\Debug\GameExperiment.exe
-  GameExperiment.vcxproj -> C:\Users\Bluem\OneDrive\Documents\GitHub\Hoppin-and-Droppin\Debug\GameExperiment.pdb (Partial PDB)
