@@ -30,7 +30,7 @@ MainMenu::MainMenu()
 	m_levelSelect.setString("Level Select");
 
 	//setPosition
-	m_title.setPosition(sf::Vector2f(570, 100));
+	m_title.setPosition(sf::Vector2f(430, 70));
 	m_backStory.setPosition(sf::Vector2f(620, 310));
 	m_controls.setPosition(sf::Vector2f(620, 410));
 	m_controlScheme.setPosition(sf::Vector2f(20, 20));
@@ -38,7 +38,7 @@ MainMenu::MainMenu()
 	m_levelSelect.setPosition(sf::Vector2f(620, 210));
 
 	//setSize
-	m_title.setCharacterSize(36);
+	m_title.setCharacterSize(56);
 	m_backStory.setCharacterSize(24);
 	m_controls.setCharacterSize(24);
 	m_controlScheme.setCharacterSize(24);
@@ -144,6 +144,10 @@ void MainMenu::render(sf::RenderWindow & t_window)
 		}
 
 		t_window.draw(m_title);
+		sf::Text temp = m_title;
+		temp.move(3,-3);
+		temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+		t_window.draw(temp);
 		t_window.draw(m_controls);
 		t_window.draw(m_backStory);
 		t_window.draw(m_levelSelect);

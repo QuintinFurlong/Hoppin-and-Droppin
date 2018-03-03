@@ -75,10 +75,6 @@ void Level::update(sf::Time t_time, GameState &gamestate, int &level)
 		m_buttons[count].setOutlineColor(MENU_OUTLINE_ON);
 	}
 
-	if (sf::Joystick::isButtonPressed(0, 1))
-	{
-		gamestate = GameState::MainMenu;
-	}
 	if (sf::Joystick::isButtonPressed(0, 0) && pressReset)
 	{
 		level = count +1;
@@ -88,6 +84,11 @@ void Level::update(sf::Time t_time, GameState &gamestate, int &level)
 	else if (!sf::Joystick::isButtonPressed(0, 0))
 	{
 		pressReset = true;
+	}
+	if (sf::Joystick::isButtonPressed(0, 1))
+	{
+		gamestate = GameState::MainMenu;
+		pressReset = false;
 	}
 }
 

@@ -27,7 +27,7 @@ static const sf::Color MENU_TITLE = sf::Color(56, 80, 44);
 
 static const sf::Color MENU_OUTLINE = sf::Color(115, 123, 110);
 static const sf::Color MENU_OUTLINE_OFF = sf::Color(56, 80, 44);
-static const sf::Color MENU_OUTLINE_ON = sf::Color(35, 49, 26);
+static const sf::Color MENU_OUTLINE_ON = sf::Color(135, 149, 126);
 
 static const sf::Color MENU_BUTTON_FILL = sf::Color(91, 131, 69);
 

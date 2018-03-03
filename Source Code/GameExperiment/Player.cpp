@@ -161,7 +161,14 @@ void Player::render(sf::RenderWindow & t_window)
 			t_window.draw(bullet.at(index));
 		}
 	}
-
+	sf::RectangleShape temp = m_body;
+	temp.move(3, -3);
+	temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+	t_window.draw(temp);
+	temp = m_healthBar;
+	temp.move(3, -3);
+	temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+	t_window.draw(temp);
 	t_window.draw(m_body);
 	t_window.draw(m_healthBar);
 }

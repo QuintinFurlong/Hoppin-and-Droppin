@@ -81,6 +81,10 @@ void Enemies::render(sf::RenderWindow & t_window)
 {
 	for (int i = 0; i < bodies.size(); i++)
 	{
+		sf::RectangleShape temp = bodies[i];
+		temp.move(3, -3);
+		temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+		t_window.draw(temp);
 		t_window.draw(bodies[i]);
 		gun[i].render(t_window);
 	}

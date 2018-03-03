@@ -178,10 +178,26 @@ int Boss::update(std::vector<sf::RectangleShape> t_blocks, std::vector<sf::Recta
 
 void Boss::render(sf::RenderWindow & t_window)
 {
+	sf::RectangleShape temp = body;
+	temp.move(3, -3);
+	temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+	t_window.draw(temp);
+	temp = deadBody;
+	temp.move(3, -3);
+	temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+	t_window.draw(temp);
 	t_window.draw(body);
 	t_window.draw(deadBody);
 	if (body.getFillColor() == BOSS_BIRD_COLOUR)
 	{
+		temp = wing;
+		temp.move(3, -3);
+		temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+		t_window.draw(temp);
+		temp = deadWing;
+		temp.move(3, -3);
+		temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+		t_window.draw(temp);
 		t_window.draw(wing);
 		t_window.draw(deadWing);
 	}

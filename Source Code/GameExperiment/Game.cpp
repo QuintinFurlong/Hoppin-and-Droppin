@@ -2,9 +2,10 @@
 #include <iostream>
 
 Game::Game()
-	: m_window{ sf::VideoMode(), "HOPPIN AND DROPPIN" , sf::Style::Fullscreen }
+	: m_window{ sf::VideoMode(1600,800), "HOPPIN AND DROPPIN" }//, sf::Style::Fullscreen }
 {
 	srand(time(NULL));
+	m_window.setVerticalSyncEnabled(true);
 	levelNumber = 5;
 	if (!LevelLoader::load(levelNumber, currentLevel))
 	{
@@ -97,6 +98,7 @@ void Game::update(sf::Time t_time)
 			m_enemies.create(currentLevel.m_enemies);
 			m_boss.create(currentLevel.m_boss);
 			m_wallSprites.clear();
+			m_wallSprites3D.clear();
 			for (WorldData const & obstacle : currentLevel.m_worldPieces)
 			{
 				sf::RectangleShape sprite;
@@ -111,6 +113,9 @@ void Game::update(sf::Time t_time)
 				else
 					sprite.setFillColor(PLATFORM_COLOUR);
 				m_wallSprites.push_back(sprite);
+				sprite.move(1, -1);
+				sprite.setFillColor(sf::Color(sprite.getFillColor().r, sprite.getFillColor().g, sprite.getFillColor().b, 180));
+				m_wallSprites3D.push_back(sprite);
 			}
 		}
 	}
@@ -186,6 +191,7 @@ void Game::update(sf::Time t_time)
 			m_enemies.create(currentLevel.m_enemies);
 			m_boss.create(currentLevel.m_boss);
 			m_wallSprites.clear();
+			m_wallSprites3D.clear();
 			for (WorldData const & obstacle : currentLevel.m_worldPieces)
 			{
 				sf::RectangleShape sprite;
@@ -229,6 +235,13 @@ void Game::render()
 		m_boss.render(m_window);
 		m_player.render(m_window);
 
+		for (const auto &m_wallVector : m_wallSprites)
+		{
+			sf::RectangleShape temp = m_wallVector;
+			temp.move(3, -3);
+			temp.setFillColor(sf::Color(temp.getFillColor().r, temp.getFillColor().g, temp.getFillColor().b, 150));
+			m_window.draw(temp);
+		}
 		for (const auto &m_wallVector : m_wallSprites)
 		{
 			m_window.draw(m_wallVector);

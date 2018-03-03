@@ -32,7 +32,7 @@ private:
 	int levelNumber;
 	LevelData currentLevel;
 	std::vector<sf::RectangleShape> m_wallSprites;
-	std::vector<sf::RectangleShape *> m_wallVector;
+	std::vector<sf::RectangleShape> m_wallSprites3D;
 
 	Level m_level;
 	MainMenu m_mainMenu;//intance of main menu
