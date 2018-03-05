@@ -2,7 +2,7 @@
 #include <iostream>
 
 Game::Game()
-	: m_window{ sf::VideoMode(1600,800), "HOPPIN AND DROPPIN" }//, sf::Style::Fullscreen }
+	: m_window{ sf::VideoMode(1600,800), "HOPPIN AND DROPPIN" , sf::Style::Fullscreen }
 {
 	srand(time(NULL));
 	m_window.setVerticalSyncEnabled(true);
