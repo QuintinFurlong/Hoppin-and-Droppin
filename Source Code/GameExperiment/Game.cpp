@@ -180,6 +180,11 @@ void Game::update(sf::Time t_time)
 			{
 				levelNumber++;
 			}
+			else if (m_boss.getHealth() == 0 && levelNumber == 5)
+			{
+				m_gamestate = GameState::MainMenu;
+			}
+
 			currentLevel.m_enemies.clear();
 			currentLevel.m_worldPieces.clear();
 			if (!LevelLoader::load(levelNumber, currentLevel))

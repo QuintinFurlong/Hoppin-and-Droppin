@@ -31,6 +31,7 @@ Player::Player()
 		//err
 	}
 	gunShot.setBuffer(gunShotBuffer);
+	gunShot.setVolume(75);
 	if (!gotShotBuffer.loadFromFile("ASSETS/SOUNDS/Getting-Shot.wav"))
 	{
 		//err
